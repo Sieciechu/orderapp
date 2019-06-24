@@ -40,7 +40,8 @@ test {
 jar {
     manifest {
         attributes('Implementation-Title': project.name,
-                'Implementation-Version': project.version)
+                'Implementation-Version': project.version,
+                'Main-Class': 'pl.nstrefa.wojciechmocek.App')
     }
 }
 
