@@ -12,6 +12,7 @@ plugins {
 
     // Apply the application plugin to add support for building an application
     id 'application'
+    id "io.freefair.lombok" version "3.5.1"
 }
 
 repositories {
@@ -25,8 +26,21 @@ dependencies {
     implementation 'com.google.guava:guava:27.0.1-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation('org.junit.jupiter:junit-jupiter:5.5.0-M1')
 }
 
 // Define the main class for the application
+group 'pl.nstrefa.wojciechmocek'
 mainClassName = 'pl.nstrefa.wojciechmocek.App'
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version)
+    }
+}
+
