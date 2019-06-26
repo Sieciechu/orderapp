@@ -44,7 +44,7 @@ class OrderTest {
         ) {
 
         Assertions.assertThrows(
-            IllegalArgumentException.class,
+            NullPointerException.class,
             () -> new Order(clientId, requestId, name, quantity, price)
         );
     }
