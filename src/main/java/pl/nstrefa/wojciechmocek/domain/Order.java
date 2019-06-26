@@ -1,0 +1,38 @@
+package pl.nstrefa.wojciechmocek.domain;
+
+import lombok.NonNull;
+
+import java.util.Objects;
+
+public class Order {
+    private ClientId clientId;
+    private long requestId;
+    private String name;
+    private int quantity;
+    private double price;
+
+    public Order(@NonNull String clientId, long requestId, @NonNull String name, int quantity, double price) {
+        this.clientId = new ClientId(clientId);
+        this.requestId = requestId;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return requestId == order.requestId &&
+            quantity == order.quantity &&
+            Double.compare(order.price, price) == 0 &&
+            clientId.equals(order.clientId) &&
+            name.equals(order.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clientId, requestId, name, quantity, price);
+    }
+}
