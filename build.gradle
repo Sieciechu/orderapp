@@ -24,9 +24,13 @@ repositories {
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:27.0.1-jre'
+    implementation 'com.opencsv:opencsv:4.6'
+
 
     // Use JUnit test framework
-    testImplementation('org.junit.jupiter:junit-jupiter:5.5.0-M1')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.0-M1'
+    testCompile "org.mockito:mockito-core:2.+"
+
 }
 
 // Define the main class for the application
