@@ -6,11 +6,11 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 
 class CsvFileReaderFactory implements FileReaderFactory {
-    public Reader create(String fileFullPath) throws IOException {
+    public Reader create(String fileFullPath) throws FileNotFoundException {
         CSVParser csvParser = new CSVParserBuilder()
             .withSeparator(',')
             .withIgnoreQuotations(true)

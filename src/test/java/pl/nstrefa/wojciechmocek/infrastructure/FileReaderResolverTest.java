@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 class FileReaderResolverTest {
 
     @Test
-    void whenFileTypeIsSupportedThenReaderShouldBeCreated() throws IOException {
+    void whenFileTypeIsSupportedThenReaderShouldBeCreated() throws Exception {
 
         // given
         var csvReader = Mockito.mock(Reader.class);
@@ -35,11 +35,10 @@ class FileReaderResolverTest {
         // when-then
         Assertions.assertEquals(csvReader, fileReaderResolver.createReader("file.csv"));
         Assertions.assertEquals(xmlReader, fileReaderResolver.createReader("file.xml"));
-        Assertions.assertNull(fileReaderResolver.createReader("file.zzz"));
     }
 
     @Test
-    void whenFileTypeIsNotSupportedThenReaderShouldNotBeCreated() throws IOException {
+    void whenFileTypeIsNotSupportedThenReaderShouldNotBeCreated() throws Exception {
         // given
         var csvReader = Mockito.mock(Reader.class);
         var xmlReader = Mockito.mock(Reader.class);
@@ -58,11 +57,14 @@ class FileReaderResolverTest {
         var fileReaderResolver = new FileReaderResolver(factories);
 
         // when-then
-        Assertions.assertNull(fileReaderResolver.createReader("file.zzz"));
+        Assertions.assertThrows(
+            ReaderException.class,
+            () -> fileReaderResolver.createReader("file.zzz")
+        );
     }
 
     @Test
-    void whenFileTypeIsSupportedButFileDoesNotExistThenItIsImpossibleToCreateReader() throws IOException {
+    void whenFileTypeIsSupportedButFileDoesNotExistThenItIsImpossibleToCreateReader() throws Exception {
         // given
         var csvReader = Mockito.mock(Reader.class);
         var xmlReader = Mockito.mock(Reader.class);
