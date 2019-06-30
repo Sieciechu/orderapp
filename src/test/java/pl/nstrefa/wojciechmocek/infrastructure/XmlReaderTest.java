@@ -6,14 +6,13 @@ import org.xml.sax.SAXException;
 import pl.nstrefa.wojciechmocek.domain.Order;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.io.StringReader;
 
 class XmlReaderTest {
 
     @Test
-    void read() throws XMLStreamException, ParserConfigurationException, IOException, SAXException, ReaderException {
+    void read() throws ParserConfigurationException, IOException, SAXException, ReaderException {
 
         // given
         String someXml = "<requests>\n" +

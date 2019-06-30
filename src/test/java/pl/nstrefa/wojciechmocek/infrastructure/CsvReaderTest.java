@@ -7,6 +7,7 @@ import pl.nstrefa.wojciechmocek.domain.Order;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 class CsvReaderTest {
     @Test
@@ -31,18 +32,20 @@ class CsvReaderTest {
     }
 
     @Test
-    void whenRowIsEmptyThenNewOrderIsNotRead() throws ReaderException, IOException {
+    void whenThereAreNoRowsThenNewOrderIsNotRead() throws ReaderException, IOException {
 
         // given
         com.opencsv.CSVReader reader = Mockito.mock(com.opencsv.CSVReader.class);
-        Mockito.when(reader.readNext()).thenReturn(null);
+        Iterator<String[]> iterator = Mockito.mock(Iterator.class);
+        Mockito.when(reader.iterator()).thenReturn(iterator);
+        Mockito.when(iterator.next()).thenThrow(NoSuchElementException.class);
 
         CsvReader csvReader = new CsvReader(reader);
 
-        // when
-        Order o = csvReader.read();
-
-        // then
-        Assertions.assertNull(o);
+        // when-then
+        Assertions.assertThrows(
+            NoSuchElementException.class,
+            () -> csvReader.read()
+        );
     }
 }
