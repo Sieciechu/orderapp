@@ -4,17 +4,21 @@ import com.opencsv.CSVReader;
 import pl.nstrefa.wojciechmocek.domain.Order;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 class CsvReader implements Reader {
 
-    private final CSVReader csvReader;
+    private final Iterator<String[]> iterator;
+    private final CSVReader reader;
 
     CsvReader(CSVReader csvReader) {
-        this.csvReader = csvReader;
+        this.reader = csvReader;
+        this.iterator = csvReader.iterator();
     }
 
-    public Order read() throws IOException {
-        String[] row = csvReader.readNext();
+    public Order read() {
+
+        String[] row = iterator.next();
 
         if(null == row) {
             return null;
@@ -27,5 +31,10 @@ class CsvReader implements Reader {
             Integer.parseInt(row[3]),
             Double.parseDouble(row[4])
         );
+    }
+
+    @Override
+    public boolean hasNext() {
+        return iterator.hasNext();
     }
 }
