@@ -6,7 +6,9 @@ import pl.nstrefa.wojciechmocek.domain.OrdersRepository;
 import pl.nstrefa.wojciechmocek.infrastructure.InMemoryOrdersRepository;
 import pl.nstrefa.wojciechmocek.infrastructure.FileReaderResolver;
 import pl.nstrefa.wojciechmocek.infrastructure.Reader;
+import pl.nstrefa.wojciechmocek.infrastructure.ReaderException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class App {
@@ -21,23 +23,20 @@ public class App {
     }
 
     private void feedOrdersRepository(String[] fileNames) {
-        for(String fileName : fileNames){
+        for (String fileName : fileNames) {
             Reader reader = null;
             try {
                 reader = readerFactory.createReader(fileName);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                continue;
-            }
-            if (null == reader) {
                 continue;
             }
 
             Order o = null;
-            while(true) {
+            while (reader.hasNext()) {
                 try {
                     o = reader.read();
-                } catch (IOException e) {
+                } catch (ReaderException e) {
                     e.printStackTrace();
                 }
 
