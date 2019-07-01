@@ -17,19 +17,13 @@ class InMemoryOrdersRepositoryTest {
 
         // given
         repository = new InMemoryOrdersRepository();
-        repository.store(new Order("1", 1, "bread", 1, 2.5));
-        repository.store(new Order("1", 3, "chocolate", 2, 1.5));
-        repository.store(new Order("1", 2, "butter", 1, 3.0));
-
-        int initCount = 3;
-
 
         // when
         repository.store(new Order("3", 5, "ham", 2, 7.0));
 
         // then
         Set<Order> orders = repository.getAll();
-        Assertions.assertEquals(initCount+1, orders.size());
+        Assertions.assertEquals(1, orders.size());
         Order expectedOrder = new Order("3", 5, "ham", 2, 7.0);
         Assertions.assertTrue(orders.contains(expectedOrder));
     }
