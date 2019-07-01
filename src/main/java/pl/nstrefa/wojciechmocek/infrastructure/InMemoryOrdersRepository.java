@@ -1,26 +1,33 @@
 package pl.nstrefa.wojciechmocek.infrastructure;
 
 import lombok.NonNull;
-import pl.nstrefa.wojciechmocek.domain.ClientId;
-import pl.nstrefa.wojciechmocek.domain.Order;
-import pl.nstrefa.wojciechmocek.domain.OrderAlreadyExistsException;
-import pl.nstrefa.wojciechmocek.domain.OrdersRepository;
+import pl.nstrefa.wojciechmocek.domain.*;
 
 import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InMemoryOrdersRepository implements OrdersRepository {
 
-    private Set<Order> orders = new LinkedHashSet<>();
+    private Map<RequestId, Order> orders = new HashMap<>();
 
     @Override
-    public void store(Order order) throws OrderAlreadyExistsException {
+    public void store(@NonNull Order order) throws OrderAlreadyExistsException {
 
-        if (!orders.add(order)) {
+        if (orders.containsKey(order.getRequestId())) {
             throw new OrderAlreadyExistsException(order.getClientId(), order.getRequestId());
         }
+
+        orders.put(order.getRequestId(), order);
+    }
+
+    @Override
+    public void add(@NonNull Order order) {
+        orders.merge(order.getRequestId(), order, (existingOrder, addingOrder) -> {
+            existingOrder.addProducts(addingOrder.getProducts());
+            return existingOrder;
+        });
     }
 
     @Override
@@ -30,43 +37,44 @@ public class InMemoryOrdersRepository implements OrdersRepository {
 
     @Override
     public int countOrdersForCustomer(@NonNull ClientId clientId) {
-        return (int) orders.stream()
+        return (int) orders.values().stream()
             .filter(order -> order.getClientId().equals(clientId))
             .count();
     }
 
     @Override
     public double sumPriceOfAllOrders() {
-        return orders.stream().mapToDouble(Order::getTotalPrice).sum();
+        return orders.values().stream().mapToDouble(Order::getTotalPrice).sum();
     }
 
     @Override
     public double sumPriceOfOrdersForCustomer(@NonNull ClientId clientId) {
-        return orders.stream()
+        return orders.values().stream()
             .filter(order -> order.getClientId().equals(clientId))
             .mapToDouble(Order::getTotalPrice).sum();
     }
 
     @Override
-    public Set<Order> getAll() {
-        return Collections.unmodifiableSet(orders);
+    public Map<RequestId, Order> getAll() {
+        return Collections.unmodifiableMap(orders);
     }
 
     @Override
-    public Set<Order> getOrdersForCustomer(@NonNull ClientId clientId) {
-        return orders.stream()
-            .filter((Order o) -> o.getClientId().equals(clientId))
-            .collect(Collectors.toUnmodifiableSet());
+    public Map<RequestId, Order> getOrdersForCustomer(@NonNull ClientId clientId) {
+        return orders.entrySet().stream()
+            .filter((o) -> o.getValue().getClientId().equals(clientId))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
     }
 
     @Override
     public double getAveragePriceOfOrder() {
-        return orders.stream().collect(Collectors.averagingDouble(Order::getTotalPrice));
+        return orders.values().stream().collect(Collectors.averagingDouble(Order::getTotalPrice));
     }
 
     @Override
     public double getAveragePriceOfOrderForCustomer(@NonNull ClientId clientId) {
-        return orders.stream()
+        return orders.values().stream()
             .filter(order -> order.getClientId().equals(clientId))
             .collect(Collectors.averagingDouble(Order::getTotalPrice));
     }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 import pl.nstrefa.wojciechmocek.domain.Order;
+import pl.nstrefa.wojciechmocek.domain.Product;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -32,7 +33,7 @@ class XmlReaderTest {
         Order o = r.read();
 
         // then
-        Order expectedOrder = new Order("1", 2, "Bułka", 3, 10.0);
+        Order expectedOrder = Order.create("1", 2, new Product("Bułka", 3, 10.0));
         Assertions.assertEquals(expectedOrder, o);
     }
 }

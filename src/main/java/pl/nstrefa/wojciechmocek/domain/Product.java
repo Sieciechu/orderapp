@@ -10,7 +10,7 @@ public class Product {
     private double unitPrice;
 
     public Product(@NonNull String name, int quantity, double unitPrice) {
-        this.name = name;
+        setName(name);
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
@@ -41,7 +41,7 @@ public class Product {
         this.name = name;
     }
 
-    public double getTotalPrice() {
+    double getTotalPrice() {
         return quantity * unitPrice;
     }
 }

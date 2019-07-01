@@ -7,6 +7,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pl.nstrefa.wojciechmocek.domain.Order;
+import pl.nstrefa.wojciechmocek.domain.Product;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -59,12 +60,16 @@ class XmlReader implements Reader {
 
         var requestElement = (Element) request;
 
-        return new Order(
-            getInnerElementValue(requestElement, "clientId", String::valueOf),
-            getInnerElementValue(requestElement, "requestId", Long::valueOf),
+        Product product = new Product(
             getInnerElementValue(requestElement, "name", String::valueOf),
             getInnerElementValue(requestElement, "quantity", Integer::valueOf),
             getInnerElementValue(requestElement, "price", Double::valueOf)
+        );
+
+        return Order.create(
+            getInnerElementValue(requestElement, "clientId", String::valueOf),
+            getInnerElementValue(requestElement, "requestId", Long::valueOf),
+            product
         );
 
     }

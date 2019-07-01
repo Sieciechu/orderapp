@@ -40,20 +40,17 @@ public class App {
                         break;
                     }
 
-                    ordersRepository.store(o);
+                    ordersRepository.add(o);
 
                 } catch (ReaderException e) {
                     e.printStackTrace();
-                } catch (OrderAlreadyExistsException e) {
-                    System.err.printf("Order already exists (clientId: %s, requestId: %d)\n",
-                        e.getClientId(), e.getRequestId()
-                    );
                 }
             }
         }
     }
 
     public static void main(String[] args) {
+
         var app = new App(
             new InMemoryOrdersRepository(),
             new FileReaderResolver()

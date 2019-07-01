@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import pl.nstrefa.wojciechmocek.domain.Order;
+import pl.nstrefa.wojciechmocek.domain.Product;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -26,7 +27,7 @@ class CsvReaderTest {
 
         // then
         Assertions.assertEquals(
-            new Order("1", 2, "bread", 3, 1.11),
+            Order.create("1", 2, new Product("bread", 3, 1.11)),
             o
         );
     }

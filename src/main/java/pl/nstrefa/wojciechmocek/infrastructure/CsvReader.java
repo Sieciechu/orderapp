@@ -2,6 +2,7 @@ package pl.nstrefa.wojciechmocek.infrastructure;
 
 import com.opencsv.CSVReader;
 import pl.nstrefa.wojciechmocek.domain.Order;
+import pl.nstrefa.wojciechmocek.domain.Product;
 
 import java.util.Iterator;
 
@@ -17,12 +18,15 @@ class CsvReader implements Reader {
 
         String[] row = iterator.next();
 
-        return new Order(
-            row[0],
-            Long.parseLong(row[1]),
+        Product product = new Product(
             row[2],
             Integer.parseInt(row[3]),
             Double.parseDouble(row[4])
+        );
+        return Order.create(
+            row[0],
+            Long.parseLong(row[1]),
+            product
         );
     }
 

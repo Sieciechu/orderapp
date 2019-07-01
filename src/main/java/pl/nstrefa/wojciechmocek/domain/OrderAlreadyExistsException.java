@@ -2,9 +2,9 @@ package pl.nstrefa.wojciechmocek.domain;
 
 public class OrderAlreadyExistsException extends Throwable {
     private final ClientId clientId;
-    private final long requestId;
+    private final RequestId requestId;
 
-    public OrderAlreadyExistsException(ClientId clientId, long requestId) {
+    public OrderAlreadyExistsException(ClientId clientId, RequestId requestId) {
         this.clientId = clientId;
         this.requestId = requestId;
     }
@@ -13,7 +13,7 @@ public class OrderAlreadyExistsException extends Throwable {
         return clientId.toString();
     }
 
-    public long getRequestId() {
+    public RequestId getRequestId() {
         return requestId;
     }
 }

@@ -1,9 +1,11 @@
 package pl.nstrefa.wojciechmocek.domain;
 
-import java.util.Set;
+import java.util.Map;
 
 public interface OrdersRepository {
     void store(Order order) throws OrderAlreadyExistsException;
+
+    void add(Order order);
 
     int countAllOrders();
 
@@ -13,9 +15,9 @@ public interface OrdersRepository {
 
     double sumPriceOfOrdersForCustomer(ClientId clientId);
 
-    Set<Order> getAll();
+    Map<RequestId, Order> getAll();
 
-    Set<Order> getOrdersForCustomer(ClientId clientId);
+    Map<RequestId, Order> getOrdersForCustomer(ClientId clientId);
 
     double getAveragePriceOfOrder();
 
