@@ -9,14 +9,14 @@ public class Order {
     private long requestId;
     private String name;
     private int quantity;
-    private double price;
+    private double unitPrice;
 
-    public Order(@NonNull String clientId, long requestId, @NonNull String name, int quantity, double price) {
+    public Order(@NonNull String clientId, long requestId, @NonNull String name, int quantity, double unitPrice) {
         this.clientId = new ClientId(clientId);
         this.requestId = requestId;
         setName(name);
         this.quantity = quantity;
-        this.price = price;
+        this.unitPrice = unitPrice;
     }
 
     private void setName(@NonNull String name) {
@@ -37,13 +37,13 @@ public class Order {
         Order order = (Order) o;
         return requestId == order.requestId &&
             quantity == order.quantity &&
-            Double.compare(order.price, price) == 0 &&
+            Double.compare(order.unitPrice, unitPrice) == 0 &&
             clientId.equals(order.clientId) &&
             name.equals(order.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(clientId, requestId, name, quantity, price);
+        return Objects.hash(clientId, requestId, name, quantity, unitPrice);
     }
 }
