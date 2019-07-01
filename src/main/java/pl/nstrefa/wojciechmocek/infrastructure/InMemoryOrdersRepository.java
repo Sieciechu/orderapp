@@ -17,14 +17,6 @@ public class InMemoryOrdersRepository implements OrdersRepository {
 
     @Override
     public void store(Order order) throws OrderAlreadyExistsException {
-        boolean orderExists = orders.stream()
-            .filter(o -> o.getClientId().equals(order.getClientId()) && o.getRequestId() == order.getRequestId())
-            .findFirst().isPresent();
-
-        if (orderExists) {
-            throw new OrderAlreadyExistsException(order.getClientId(), order.getRequestId());
-        }
-
         orders.add(order);
     }
 
