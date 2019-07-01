@@ -1,44 +1,42 @@
 ### Description
 #### Program do obsługi zamówień.
-1. Program na wejściu przyjmuje jako argument listę plików csv i xml.
-2. Każdy plik zawiera jedno lub więcej zamówień (format w załączniku).
-3. Każde zamówienie należy zapisać w „bazie danych” (użyj bazy in memory).
+1. The application accepts input params. The input params is list of csv and xml files
+2. Each file contains one or more orders (check the format in resources dir, in the example orders.csv, orders.xml)
+3. Each order need to be stored in "data base" (it can be in memory db)
 
-4. Zamówienie zawiera obowiązkowe pola:
+4. Each order has obligatory fields:
 
-    a. ClientId – alfanumeryczne, bez spacji nie dłuższe niż 6 znaków,
+    a. ClientId - alphanumeric, without spaces, not longer than 6 chars,
 
-    b. RequestId – numeryczne long,
+    b. RequestId - long integer
 
-    c. Name – alfanumeryczne ze spacjami nie dłuższe niż 255 znaków,
+    c. Name - alphanumeric with spaces, not longer than 255 chars,
 
-    d. Quantity – numeryczne int,
+    d. Quantity - numeric integer
 
-    e. Price – numeryczne zmiennoprzecinkowe podwójnej precyzji.
+    e. Price - numeric double
 
-5. Program pozwala na wygenerowanie następujących raportów:
+5. The application allows to generate reports:
 
-    a. Ilość zamówień łącznie,
+    a. Number of all orders,
 
-    b. Ilość zamówień do klienta o wskazanym identyfikatorze,
+    b. Number of orders for given customer,
 
-    c. Łączna kwota zamówień,
+    c. Total price of all orders,
 
-    d. Łączna kwota zamówień do klienta o wskazanym identyfikatorze,
+    d. Total price of all orders for given customer
 
-    e. Lista wszystkich zamówień,
+    e. List of all orders,
 
-    f. Lista zamówień do klienta o wskazanym identyfikatorze,
+    f. List of orders for given customer,
 
-    g. Średnia wartość zamówienia ,
+    g. Average price of all orders,
 
-    h. Średnia wartość zamówienia do klienta o wskazanym identyfikatorze.
+    h. Average price of all orders for given customer.
 
-6. Każdy raport można wyświetlić na ekranie, albo zapisać do pliku csv (format nie jest
-   narzucony).
-7. Baza danych nie jest dzielona pomiędzy uruchomieniami.
-8. Nieprawidłowe linie w zamówieniu są ignorowane, ale informacja o złym formacie jest
-   wypisywana na ekran.
+6. Each report can be shown on the screen or written to csv file
+7. Database is not shared between launches
+8. Incorrect lines during file import are ignored, but info about error is shown to the user (screen or log file)
 
 ### Build
 #### Using gradle:
