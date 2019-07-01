@@ -3,7 +3,7 @@ package pl.nstrefa.wojciechmocek.domain;
 import java.util.Set;
 
 public interface OrdersRepository {
-    void store(Order order);
+    void store(Order order) throws OrderAlreadyExistsException;
 
     int countAllOrders();
 
@@ -17,7 +17,7 @@ public interface OrdersRepository {
 
     Set<Order> getOrdersForCustomer(ClientId clientId);
 
-    double getAveragePriceOfOrderForCustomer();
+    double getAveragePriceOfOrder();
 
     double getAveragePriceOfOrderForCustomer(ClientId clientId);
 }

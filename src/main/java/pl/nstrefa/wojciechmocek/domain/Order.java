@@ -46,4 +46,16 @@ public class Order {
     public int hashCode() {
         return Objects.hash(clientId, requestId, name, quantity, unitPrice);
     }
+
+    public ClientId getClientId() {
+        return clientId;
+    }
+
+    public long getRequestId() {
+        return requestId;
+    }
+
+    public double getTotalPrice() {
+        return quantity * unitPrice;
+    }
 }

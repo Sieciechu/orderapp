@@ -4,10 +4,10 @@ import lombok.NonNull;
 
 import java.util.Objects;
 
-class ClientId {
+public class ClientId {
     private String value;
 
-    ClientId(@NonNull String value) {
+    public ClientId(@NonNull String value) {
         if (6 < value.length()) {
             throw new IllegalArgumentException("ClientId cannot be longer than 6 chars");
         }

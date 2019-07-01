@@ -3,6 +3,7 @@ package pl.nstrefa.wojciechmocek;
 
 import lombok.NonNull;
 import pl.nstrefa.wojciechmocek.domain.Order;
+import pl.nstrefa.wojciechmocek.domain.OrderAlreadyExistsException;
 import pl.nstrefa.wojciechmocek.domain.OrdersRepository;
 import pl.nstrefa.wojciechmocek.infrastructure.FileReaderResolver;
 import pl.nstrefa.wojciechmocek.infrastructure.InMemoryOrdersRepository;
@@ -33,16 +34,21 @@ public class App {
             Order o = null;
             while (reader.hasNext()) {
                 try {
+
                     o = reader.read();
+                    if (null == o) {
+                        break;
+                    }
+
+                    ordersRepository.store(o);
+
                 } catch (ReaderException e) {
                     e.printStackTrace();
+                } catch (OrderAlreadyExistsException e) {
+                    System.err.printf("Order already exists (clientId: %s, requestId: %d)\n",
+                        e.getClientId(), e.getRequestId()
+                    );
                 }
-
-                if (null == o) {
-                    break;
-                }
-
-                ordersRepository.store(o);
             }
         }
     }
