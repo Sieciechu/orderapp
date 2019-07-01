@@ -44,7 +44,7 @@ public class InMemoryOrdersRepository implements OrdersRepository {
     }
 
     @Override
-    public double sumPriceofAllOrders() {
+    public double sumPriceOfAllOrders() {
         return orders.stream().mapToDouble(Order::getTotalPrice).sum();
     }
 

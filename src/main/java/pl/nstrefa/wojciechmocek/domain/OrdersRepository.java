@@ -9,7 +9,7 @@ public interface OrdersRepository {
 
     int countOrdersForCustomer(ClientId clientId);
 
-    double sumPriceofAllOrders();
+    double sumPriceOfAllOrders();
 
     double sumPriceOfOrdersForCustomer(ClientId clientId);
 
