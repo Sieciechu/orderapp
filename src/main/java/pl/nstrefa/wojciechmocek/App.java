@@ -20,6 +20,19 @@ public class App {
         this.ordersRepository = o;
         this.readerFactory = r;
     }
+    
+    public static void main(String[] args) {
+
+        var app = new App(
+            new InMemoryOrdersRepository(),
+            new FileReaderResolver()
+        );
+        app.feedOrdersRepository(args);
+        app.run();
+    }
+
+    private void run() {
+    }
 
     private void feedOrdersRepository(@NonNull String[] fileNames) {
         for (String fileName : fileNames) {
@@ -47,18 +60,5 @@ public class App {
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-
-        var app = new App(
-            new InMemoryOrdersRepository(),
-            new FileReaderResolver()
-        );
-        app.feedOrdersRepository(args);
-        app.run();
-    }
-
-    private void run() {
     }
 }
