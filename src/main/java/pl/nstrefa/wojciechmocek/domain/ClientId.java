@@ -4,8 +4,8 @@ import lombok.NonNull;
 
 import java.util.Objects;
 
-public class ClientId {
-    private String value;
+public final class ClientId {
+    private final String value;
 
     public ClientId(@NonNull String value) {
         if (6 < value.length()) {
