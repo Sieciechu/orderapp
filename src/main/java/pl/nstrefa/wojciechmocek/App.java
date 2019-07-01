@@ -1,6 +1,7 @@
 
 package pl.nstrefa.wojciechmocek;
 
+import lombok.NonNull;
 import pl.nstrefa.wojciechmocek.domain.Order;
 import pl.nstrefa.wojciechmocek.domain.OrdersRepository;
 import pl.nstrefa.wojciechmocek.infrastructure.FileReaderResolver;
@@ -14,12 +15,12 @@ public class App {
     private OrdersRepository ordersRepository;
     private FileReaderResolver readerFactory;
 
-    private App(OrdersRepository o, FileReaderResolver r) {
+    private App(@NonNull OrdersRepository o, @NonNull FileReaderResolver r) {
         this.ordersRepository = o;
         this.readerFactory = r;
     }
 
-    private void feedOrdersRepository(String[] fileNames) {
+    private void feedOrdersRepository(@NonNull String[] fileNames) {
         for (String fileName : fileNames) {
             Reader reader = null;
             try {
