@@ -17,21 +17,21 @@ public class InMemoryOrdersRepository implements OrdersRepository {
 
     @Override
     public void store(Order order) throws OrderAlreadyExistsException {
-        orders.add(order);
+
+        if (!orders.add(order)) {
+            throw new OrderAlreadyExistsException(order.getClientId(), order.getRequestId());
+        }
     }
 
     @Override
     public int countAllOrders() {
-        return (int) orders.stream()
-            .mapToLong(Order::getRequestId)
-            .count();
+        return orders.size();
     }
 
     @Override
     public int countOrdersForCustomer(@NonNull ClientId clientId) {
         return (int) orders.stream()
             .filter(order -> order.getClientId().equals(clientId))
-            .mapToLong(Order::getRequestId)
             .count();
     }
 
