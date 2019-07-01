@@ -11,8 +11,8 @@ public final class ClientId {
         if (6 < value.length()) {
             throw new IllegalArgumentException("ClientId cannot be longer than 6 chars");
         }
-        if (!value.matches("[A-Za-z0-9ąćęłńóśźżĄĘŁŃÓŚŹŻ ]+")) {
-            throw new IllegalArgumentException("ClientId must contain only alphanumeric chars");
+        if (!value.matches("[A-Za-z0-9ąćęłńóśźżĄĘŁŃÓŚŹŻ]+")) {
+            throw new IllegalArgumentException("ClientId must contain only alphanumeric chars without spaces");
         }
         this.value = value;
     }
