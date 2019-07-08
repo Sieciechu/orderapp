@@ -1,5 +1,6 @@
 package pl.nstrefa.wojciechmocek.domain;
 
+import java.util.List;
 import java.util.Map;
 
 public interface OrdersRepository {
@@ -22,4 +23,6 @@ public interface OrdersRepository {
     double getAveragePriceOfOrder();
 
     double getAveragePriceOfOrderForCustomer(ClientId clientId);
+
+    List<ClientId> getDistinctClients();
 }

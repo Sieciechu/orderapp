@@ -297,7 +297,25 @@ class InMemoryOrdersRepositoryTest {
         Assertions.assertEquals(5.0, repository.getAveragePriceOfOrderForCustomer(new ClientId("1")));
         Assertions.assertEquals(14.0, repository.getAveragePriceOfOrderForCustomer(new ClientId("2")));
         Assertions.assertEquals(12.0, repository.getAveragePriceOfOrderForCustomer(new ClientId("3")));
+    }
 
+    @Test
+    void getDistinctClients() {
+        // given
+        repository = new InMemoryOrdersRepository();
+
+        repository.add(Order.create("1", 1, new Product("bread", 1, 4.0)));
+        repository.add(Order.create("1", 2, new Product("butter", 1, 6.0)));
+        repository.add(Order.create("2", 3, new Product("ham", 2, 5.0)));
+        repository.add(Order.create("2", 3, new Product("candy", 1, 4.0)));
+        repository.add(Order.create("3", 5, new Product("butter", 1, 6.0)));
+
+        // when-then
+        List<ClientId> clients = repository.getDistinctClients();
+        Assertions.assertEquals(3, clients.size());
+        Assertions.assertTrue(clients.contains(new ClientId("1")));
+        Assertions.assertTrue(clients.contains(new ClientId("2")));
+        Assertions.assertTrue(clients.contains(new ClientId("3")));
 
     }
 }

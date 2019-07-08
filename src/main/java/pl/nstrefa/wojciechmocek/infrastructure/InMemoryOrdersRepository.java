@@ -5,6 +5,7 @@ import pl.nstrefa.wojciechmocek.domain.*;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -77,5 +78,12 @@ public class InMemoryOrdersRepository implements OrdersRepository {
         return orders.values().stream()
             .filter(order -> order.getClientId().equals(clientId))
             .collect(Collectors.averagingDouble(Order::getTotalPrice));
+    }
+
+    @Override
+    public List<ClientId> getDistinctClients() {
+        return orders.values().stream()
+            .map(Order::getClientId)
+            .distinct().collect(Collectors.toList());
     }
 }
