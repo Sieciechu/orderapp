@@ -17,7 +17,7 @@ public class InMemoryOrdersRepository implements OrdersRepository {
     public void store(@NonNull Order order) throws OrderAlreadyExistsException {
 
         if (orders.containsKey(order.getRequestId())) {
-            throw new OrderAlreadyExistsException(order.getClientId(), order.getRequestId());
+            throw new OrderAlreadyExistsException(order.getCustomerId(), order.getRequestId());
         }
 
         orders.put(order.getRequestId(), order);
@@ -37,9 +37,9 @@ public class InMemoryOrdersRepository implements OrdersRepository {
     }
 
     @Override
-    public int countOrdersForCustomer(@NonNull ClientId clientId) {
+    public int countOrdersForCustomer(@NonNull CustomerId customerId) {
         return (int) orders.values().stream()
-            .filter(order -> order.getClientId().equals(clientId))
+            .filter(order -> order.getCustomerId().equals(customerId))
             .count();
     }
 
@@ -49,9 +49,9 @@ public class InMemoryOrdersRepository implements OrdersRepository {
     }
 
     @Override
-    public double sumPriceOfOrdersForCustomer(@NonNull ClientId clientId) {
+    public double sumPriceOfOrdersForCustomer(@NonNull CustomerId customerId) {
         return orders.values().stream()
-            .filter(order -> order.getClientId().equals(clientId))
+            .filter(order -> order.getCustomerId().equals(customerId))
             .mapToDouble(Order::getTotalPrice).sum();
     }
 
@@ -61,9 +61,9 @@ public class InMemoryOrdersRepository implements OrdersRepository {
     }
 
     @Override
-    public Map<RequestId, Order> getOrdersForCustomer(@NonNull ClientId clientId) {
+    public Map<RequestId, Order> getOrdersForCustomer(@NonNull CustomerId customerId) {
         return orders.entrySet().stream()
-            .filter((o) -> o.getValue().getClientId().equals(clientId))
+            .filter((o) -> o.getValue().getCustomerId().equals(customerId))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     }
@@ -74,16 +74,16 @@ public class InMemoryOrdersRepository implements OrdersRepository {
     }
 
     @Override
-    public double getAveragePriceOfOrderForCustomer(@NonNull ClientId clientId) {
+    public double getAveragePriceOfOrderForCustomer(@NonNull CustomerId customerId) {
         return orders.values().stream()
-            .filter(order -> order.getClientId().equals(clientId))
+            .filter(order -> order.getCustomerId().equals(customerId))
             .collect(Collectors.averagingDouble(Order::getTotalPrice));
     }
 
     @Override
-    public List<ClientId> getDistinctClients() {
+    public List<CustomerId> getDistinctCustomers() {
         return orders.values().stream()
-            .map(Order::getClientId)
+            .map(Order::getCustomerId)
             .distinct().collect(Collectors.toList());
     }
 }

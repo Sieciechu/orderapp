@@ -194,9 +194,9 @@ class InMemoryOrdersRepositoryTest {
         repository.add(Order.create("2", 5, new Product("bread", 2, 2.5)));
         repository.add(Order.create("3", 6, new Product("butter", 1, 3.0)));
 
-        Assertions.assertEquals(2, repository.countOrdersForCustomer(new ClientId("1")));
-        Assertions.assertEquals(1, repository.countOrdersForCustomer(new ClientId("2")));
-        Assertions.assertEquals(1, repository.countOrdersForCustomer(new ClientId("3")));
+        Assertions.assertEquals(2, repository.countOrdersForCustomer(new CustomerId("1")));
+        Assertions.assertEquals(1, repository.countOrdersForCustomer(new CustomerId("2")));
+        Assertions.assertEquals(1, repository.countOrdersForCustomer(new CustomerId("3")));
     }
 
     @Test
@@ -218,7 +218,7 @@ class InMemoryOrdersRepositoryTest {
         repository.store(Order.create("2", 4, new Product("ham", 3, 10.0)));
         repository.store(Order.create("3", 5, new Product("ham", 1, 10.0)));
 
-        Assertions.assertEquals(8.5, repository.sumPriceOfOrdersForCustomer(new ClientId("1")));
+        Assertions.assertEquals(8.5, repository.sumPriceOfOrdersForCustomer(new CustomerId("1")));
     }
 
     @Test
@@ -245,7 +245,7 @@ class InMemoryOrdersRepositoryTest {
 
         repository.add(Order.create("3", 4, new Product("ham", 1, 10.0)));
 
-        Map<RequestId, Order> orders = repository.getOrdersForCustomer(new ClientId("1"));
+        Map<RequestId, Order> orders = repository.getOrdersForCustomer(new CustomerId("1"));
         Assertions.assertEquals(2, orders.size());
         Assertions.assertEquals(
             Order.create("1", 1, Arrays.asList(
@@ -294,9 +294,9 @@ class InMemoryOrdersRepositoryTest {
         repository.add(Order.create("3", 5, new Product("butter", 1, 6.0)));
 
         // when-then
-        Assertions.assertEquals(5.0, repository.getAveragePriceOfOrderForCustomer(new ClientId("1")));
-        Assertions.assertEquals(14.0, repository.getAveragePriceOfOrderForCustomer(new ClientId("2")));
-        Assertions.assertEquals(12.0, repository.getAveragePriceOfOrderForCustomer(new ClientId("3")));
+        Assertions.assertEquals(5.0, repository.getAveragePriceOfOrderForCustomer(new CustomerId("1")));
+        Assertions.assertEquals(14.0, repository.getAveragePriceOfOrderForCustomer(new CustomerId("2")));
+        Assertions.assertEquals(12.0, repository.getAveragePriceOfOrderForCustomer(new CustomerId("3")));
     }
 
     @Test
@@ -311,11 +311,11 @@ class InMemoryOrdersRepositoryTest {
         repository.add(Order.create("3", 5, new Product("butter", 1, 6.0)));
 
         // when-then
-        List<ClientId> clients = repository.getDistinctClients();
+        List<CustomerId> clients = repository.getDistinctCustomers();
         Assertions.assertEquals(3, clients.size());
-        Assertions.assertTrue(clients.contains(new ClientId("1")));
-        Assertions.assertTrue(clients.contains(new ClientId("2")));
-        Assertions.assertTrue(clients.contains(new ClientId("3")));
+        Assertions.assertTrue(clients.contains(new CustomerId("1")));
+        Assertions.assertTrue(clients.contains(new CustomerId("2")));
+        Assertions.assertTrue(clients.contains(new CustomerId("3")));
 
     }
 }

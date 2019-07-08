@@ -16,7 +16,7 @@ class OrderTest {
     @Test
     void whenDataIsCorrectThenOrderShouldBeCreated() {
         new Order(
-            new ClientId("1"),
+            new CustomerId("1"),
             new RequestId(1),
             Arrays.asList(new Product("pizza", 1, 16.23))
         );
@@ -26,8 +26,8 @@ class OrderTest {
 
     @ParameterizedTest
     @MethodSource("orderWithMissingParamsProvider")
-    void itIsImpossibleToCreateOrderWhenClientIdOrNameIsMissing(
-            ClientId clientId,
+    void itIsImpossibleToCreateOrderWhenCustomerIdOrNameIsMissing(
+            CustomerId customerId,
             RequestId requestId,
             List<Product> products
         ) {
@@ -35,7 +35,7 @@ class OrderTest {
 
         Assertions.assertThrows(
             NullPointerException.class,
-            () -> new Order(clientId, requestId, products)
+            () -> new Order(customerId, requestId, products)
         );
     }
 
@@ -43,8 +43,8 @@ class OrderTest {
         List<Product> exampleProducts = Arrays.asList(new Product("some name", 2, 16.23));
         return Stream.of(
             Arguments.of(null, new RequestId(1), exampleProducts),
-            Arguments.of(new ClientId("aa"), null, exampleProducts),
-            Arguments.of(new ClientId("aa"), new RequestId(1), null)
+            Arguments.of(new CustomerId("aa"), null, exampleProducts),
+            Arguments.of(new CustomerId("aa"), new RequestId(1), null)
         );
     }
 }

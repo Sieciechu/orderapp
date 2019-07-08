@@ -67,7 +67,7 @@ class XmlReader implements Reader {
         );
 
         return Order.create(
-            getInnerElementValue(requestElement, "clientId", String::valueOf),
+            getInnerElementValue(requestElement, "customerId", String::valueOf),
             getInnerElementValue(requestElement, "requestId", Long::valueOf),
             product
         );

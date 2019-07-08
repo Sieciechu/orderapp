@@ -4,15 +4,15 @@ import lombok.NonNull;
 
 import java.util.Objects;
 
-public final class ClientId {
+public final class CustomerId {
     private final String value;
 
-    public ClientId(@NonNull String value) {
+    public CustomerId(@NonNull String value) {
         if (6 < value.length()) {
-            throw new IllegalArgumentException("ClientId cannot be longer than 6 chars");
+            throw new IllegalArgumentException("CustomerId cannot be longer than 6 chars");
         }
         if (!value.matches("[A-Za-z0-9ąćęłńóśźżĄĘŁŃÓŚŹŻ]+")) {
-            throw new IllegalArgumentException("ClientId must contain only alphanumeric chars without spaces");
+            throw new IllegalArgumentException("CustomerId must contain only alphanumeric chars without spaces");
         }
         this.value = value;
     }
@@ -26,8 +26,8 @@ public final class ClientId {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ClientId clientId = (ClientId) o;
-        return value.equals(clientId.value);
+        CustomerId customerId = (CustomerId) o;
+        return value.equals(customerId.value);
     }
 
     @Override

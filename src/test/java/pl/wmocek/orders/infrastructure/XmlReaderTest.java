@@ -18,7 +18,7 @@ class XmlReaderTest {
         // given
         String someXml = "<requests>\n" +
             "    <request>\n" +
-            "        <clientId>1</clientId>\n" +
+            "        <customerId>1</customerId>\n" +
             "        <requestId>2</requestId>\n" +
             "        <name>Bułka</name>\n" +
             "        <quantity>3</quantity>\n" +

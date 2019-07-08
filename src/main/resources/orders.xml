@@ -1,27 +1,27 @@
 <requests>
     <request>
-        <clientId>1</clientId>
+        <customerId>1</customerId>
         <requestId>10</requestId>
         <name>Bułka</name>
         <quantity>1</quantity>
         <price>10.00</price>
     </request>
     <request>
-        <clientId>1</clientId>
+        <customerId>1</customerId>
         <requestId>20</requestId>
         <name>Chleb</name>
         <quantity>2</quantity>
         <price>15.00</price>
     </request>
     <request>
-        <clientId>1</clientId>
+        <customerId>1</customerId>
         <requestId>20</requestId>
         <name>Chleb</name>
         <quantity>5</quantity>
         <price>15.00</price>
     </request>
     <request>
-        <clientId>2</clientId>
+        <customerId>2</customerId>
         <requestId>30</requestId>
         <name>Chleb</name>
         <quantity>1</quantity>

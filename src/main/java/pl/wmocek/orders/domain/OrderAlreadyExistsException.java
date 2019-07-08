@@ -1,16 +1,16 @@
 package pl.wmocek.orders.domain;
 
 public class OrderAlreadyExistsException extends Throwable {
-    private final ClientId clientId;
+    private final CustomerId customerId;
     private final RequestId requestId;
 
-    public OrderAlreadyExistsException(ClientId clientId, RequestId requestId) {
-        this.clientId = clientId;
+    public OrderAlreadyExistsException(CustomerId customerId, RequestId requestId) {
+        this.customerId = customerId;
         this.requestId = requestId;
     }
 
-    public String getClientId() {
-        return clientId.toString();
+    public String getCustomerId() {
+        return customerId.toString();
     }
 
     public RequestId getRequestId() {

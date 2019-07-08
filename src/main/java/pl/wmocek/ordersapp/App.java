@@ -2,7 +2,7 @@
 package pl.wmocek.ordersapp;
 
 import lombok.NonNull;
-import pl.wmocek.orders.domain.ClientId;
+import pl.wmocek.orders.domain.CustomerId;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.OrdersRepository;
 import pl.wmocek.orders.infrastructure.FileReaderResolver;
@@ -69,14 +69,14 @@ public class App {
 
         if ("b".equals(chosenOption)) {
             System.out.println("List of customers:");
-            ordersRepository.getDistinctClients().forEach(clientId -> {
-                System.out.println(" - '" + clientId + "'");
+            ordersRepository.getDistinctCustomers().forEach(customerId -> {
+                System.out.println(" - '" + customerId + "'");
             });
             System.out.print("Please choose the customer by typing the client id: ");
             String client = scanner.nextLine();
 
             a = "Total number of all orders for customer '" + client + "'";
-            result = String.valueOf(ordersRepository.countOrdersForCustomer(new ClientId(client)));
+            result = String.valueOf(ordersRepository.countOrdersForCustomer(new CustomerId(client)));
         }
 
         if ("c".equals(chosenOption)) {
@@ -86,14 +86,14 @@ public class App {
 
         if ("d".equals(chosenOption)) {
             System.out.println("List of customers:");
-            ordersRepository.getDistinctClients().forEach(clientId -> {
-                System.out.println(" - '" + clientId + "'");
+            ordersRepository.getDistinctCustomers().forEach(customerId -> {
+                System.out.println(" - '" + customerId + "'");
             });
             System.out.print("Please choose the customer by typing the client id: ");
             String client = scanner.nextLine();
 
             a = "Total price of all orders for customer '" + client + "'";
-            result = String.valueOf(ordersRepository.sumPriceOfOrdersForCustomer(new ClientId(client)));
+            result = String.valueOf(ordersRepository.sumPriceOfOrdersForCustomer(new CustomerId(client)));
         }
 
         if ("e".equals(chosenOption)) {
@@ -104,8 +104,8 @@ public class App {
 
         if ("f".equals(chosenOption)) {
             System.out.println("List of customers:");
-            ordersRepository.getDistinctClients().forEach(clientId -> {
-                System.out.println(" - '" + clientId + "'");
+            ordersRepository.getDistinctCustomers().forEach(customerId -> {
+                System.out.println(" - '" + customerId + "'");
             });
             System.out.print("Please choose the customer by typing the client id: ");
             String client = scanner.nextLine();
@@ -121,14 +121,14 @@ public class App {
 
         if ("h".equals(chosenOption)) {
             System.out.println("List of customers:");
-            ordersRepository.getDistinctClients().forEach(clientId -> {
-                System.out.println(" - '" + clientId + "'");
+            ordersRepository.getDistinctCustomers().forEach(customerId -> {
+                System.out.println(" - '" + customerId + "'");
             });
             System.out.print("Please choose the customer by typing the client id: ");
             String client = scanner.nextLine();
 
             a = "Average price of all orders for customer '" + client + "'";
-            result = String.valueOf(ordersRepository.getAveragePriceOfOrderForCustomer(new ClientId(client)));
+            result = String.valueOf(ordersRepository.getAveragePriceOfOrderForCustomer(new CustomerId(client)));
         }
 
         System.out.print(

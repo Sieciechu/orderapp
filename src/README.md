@@ -6,7 +6,7 @@
 
 4. Each order has obligatory fields:
 
-    a. ClientId - alphanumeric, without spaces, not longer than 6 chars,
+    a. CustomerId - alphanumeric, without spaces, not longer than 6 chars,
 
     b. RequestId - long integer
 

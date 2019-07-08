@@ -10,19 +10,19 @@ public interface OrdersRepository {
 
     int countAllOrders();
 
-    int countOrdersForCustomer(ClientId clientId);
+    int countOrdersForCustomer(CustomerId customerId);
 
     double sumPriceOfAllOrders();
 
-    double sumPriceOfOrdersForCustomer(ClientId clientId);
+    double sumPriceOfOrdersForCustomer(CustomerId customerId);
 
     Map<RequestId, Order> getAll();
 
-    Map<RequestId, Order> getOrdersForCustomer(ClientId clientId);
+    Map<RequestId, Order> getOrdersForCustomer(CustomerId customerId);
 
     double getAveragePriceOfOrder();
 
-    double getAveragePriceOfOrderForCustomer(ClientId clientId);
+    double getAveragePriceOfOrderForCustomer(CustomerId customerId);
 
-    List<ClientId> getDistinctClients();
+    List<CustomerId> getDistinctCustomers();
 }
