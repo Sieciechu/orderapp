@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import pl.wmocek.orders.domain.*;
+import pl.wmocek.orders.domain.CustomerId;
+import pl.wmocek.orders.domain.Order;
+import pl.wmocek.orders.domain.OrderAlreadyExistsException;
+import pl.wmocek.orders.domain.Product;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 class InMemoryOrdersRepositoryTest {
@@ -32,13 +34,16 @@ class InMemoryOrdersRepositoryTest {
 
 
         // then
-        Map<RequestId, Order> orders = repository.getAll();
+        List<Order> orders = repository.getAll();
+
         Assertions.assertEquals(1, orders.size());
+
         Order expectedOrder = Order.create("1", 1, Arrays.asList(
             new Product("bread", 1, 2.5),
             new Product("chocolate", 2, 1.5)
         ));
-        Assertions.assertEquals(expectedOrder, orders.get(new RequestId(1)));
+
+        Assertions.assertEquals(expectedOrder, orders.get(0));
     }
 
     @Test
@@ -81,7 +86,7 @@ class InMemoryOrdersRepositoryTest {
 
 
         // then
-        Map<RequestId, Order> orders = repository.getAll();
+        List<Order> orders = repository.getAll();
 
 
         Order expectedOrder = Order.create("1", 1, Arrays.asList(
@@ -89,7 +94,7 @@ class InMemoryOrdersRepositoryTest {
             new Product("chocolate", 2, 1.5)
         ));
         Assertions.assertEquals(1, orders.size());
-        Assertions.assertEquals(expectedOrder, orders.get(new RequestId(1)));
+        Assertions.assertEquals(expectedOrder, orders.get(0));
     }
 
     @Test
@@ -110,7 +115,7 @@ class InMemoryOrdersRepositoryTest {
 
 
         // then
-        Map<RequestId, Order> orders = repository.getAll();
+        List<Order> orders = repository.getAll();
         Assertions.assertEquals(1, orders.size());
 
         Order expectedOrder = Order.create("1", 1, Arrays.asList(
@@ -119,7 +124,7 @@ class InMemoryOrdersRepositoryTest {
             new Product("candy", 3, 2.5)
         ));
 
-        Assertions.assertEquals(expectedOrder, orders.get(new RequestId(1)));
+        Assertions.assertEquals(expectedOrder, orders.get(0));
     }
 
     @ParameterizedTest
@@ -230,7 +235,7 @@ class InMemoryOrdersRepositoryTest {
         repository.store(Order.create("2", 3, new Product("ham", 3, 10.0)));
         repository.store(Order.create("3", 4, new Product("ham", 1, 10.0)));
 
-        Map<RequestId, Order> orders = repository.getAll();
+        List<Order> orders = repository.getAll();
         Assertions.assertEquals(5, orders.size());
     }
 
@@ -245,18 +250,18 @@ class InMemoryOrdersRepositoryTest {
 
         repository.add(Order.create("3", 4, new Product("ham", 1, 10.0)));
 
-        Map<RequestId, Order> orders = repository.getOrdersForCustomer(new CustomerId("1"));
+        List<Order> orders = repository.getOrdersForCustomer(new CustomerId("1"));
         Assertions.assertEquals(2, orders.size());
         Assertions.assertEquals(
             Order.create("1", 1, Arrays.asList(
                 new Product("bread", 1, 2.5),
                 new Product("butter", 1, 3.0)
             )),
-            orders.get(new RequestId(1))
+            orders.get(0)
         );
         Assertions.assertEquals(
             Order.create("1", 2, new Product("chocolate", 2, 1.5)),
-            orders.get(new RequestId(2))
+            orders.get(1)
         );
 
     }

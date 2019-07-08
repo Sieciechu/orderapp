@@ -3,7 +3,6 @@ package pl.wmocek.orders.infrastructure;
 import lombok.NonNull;
 import pl.wmocek.orders.domain.*;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,15 +55,15 @@ public class InMemoryOrdersRepository implements OrdersRepository {
     }
 
     @Override
-    public Map<RequestId, Order> getAll() {
-        return Collections.unmodifiableMap(orders);
+    public List<Order> getAll() {
+        return orders.values().stream().collect(Collectors.toUnmodifiableList());
     }
 
     @Override
-    public Map<RequestId, Order> getOrdersForCustomer(@NonNull CustomerId customerId) {
-        return orders.entrySet().stream()
-            .filter((o) -> o.getValue().getCustomerId().equals(customerId))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public List<Order> getOrdersForCustomer(@NonNull CustomerId customerId) {
+        return orders.values().stream()
+            .filter(order -> order.getCustomerId().equals(customerId))
+            .collect(Collectors.toUnmodifiableList());
 
     }
 

@@ -1,7 +1,6 @@
 package pl.wmocek.orders.domain;
 
 import java.util.List;
-import java.util.Map;
 
 public interface OrdersRepository {
     void store(Order order) throws OrderAlreadyExistsException;
@@ -16,9 +15,9 @@ public interface OrdersRepository {
 
     double sumPriceOfOrdersForCustomer(CustomerId customerId);
 
-    Map<RequestId, Order> getAll();
+    List<Order> getAll();
 
-    Map<RequestId, Order> getOrdersForCustomer(CustomerId customerId);
+    List<Order> getOrdersForCustomer(CustomerId customerId);
 
     double getAveragePriceOfOrder();
 
