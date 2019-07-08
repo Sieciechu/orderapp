@@ -6,4 +6,5 @@
 *.jar
 /projekt.pdf
 /out
+/src/main/resources/report.csv
 
