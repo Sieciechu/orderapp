@@ -1,5 +1,5 @@
 
-package pl.wmocek.orders;
+package pl.wmocek.ordersapp;
 
 import lombok.NonNull;
 import pl.wmocek.orders.domain.ClientId;
