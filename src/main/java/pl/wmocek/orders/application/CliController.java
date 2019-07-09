@@ -6,22 +6,30 @@ import pl.wmocek.orders.domain.DistinctCustomersRepository;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.function.Supplier;
 
 public class CliController implements Controller {
 
     private DistinctCustomersRepository repository;
     private Scanner scanner;
-    private Map< String, Supplier<Command> > router = new HashMap<>();
+    private Map< String, CommandFactory> router = new HashMap<>();
+
 
     CliController(DistinctCustomersRepository repository, Scanner scanner) {
         this.repository = repository;
         this.scanner = scanner;
 
-        router.put("fc", () -> new CreateOrdersForCustomerCSVReport());
-        router.put("fs", () -> new CreateOrdersForCustomerScreenReport());
-        router.put("ec", () -> new CreateAllOrdersCSVReport());
-        router.put("es", () -> new CreateAllOrdersScreenReport());
+        setRoute("as", () -> new CountAllOrdersScreenReport());
+        setRoute("cs", () -> new TotalPriceOfAllOrdersScreenReport());
+//        router.put("ac", () -> new CountAllOrdersCSVReport());
+//        router.put("ec", () -> new CreateAllOrdersCSVReport());
+        setRoute("es", () -> new CreateAllOrdersScreenReport());
+//        router.put("fc", () -> new CreateOrdersForCustomerCSVReport());
+        setRoute("fs", () -> new CreateOrdersForCustomerScreenReport());
+        setRoute("gs", () -> new AveragePriceOfAllOrdersScreenReport());
+    }
+
+    private void setRoute(String key, CommandFactory factory) {
+        router.put(key, factory);
     }
 
     public Command getCommand(){
@@ -33,11 +41,15 @@ public class CliController implements Controller {
             return null;
         }
 
-        printReportDestination();
-        String reportDestination = scanner.nextLine();
+        String reportDestination = chooseDestination();
         String chosenRoute = chosenOption + reportDestination;
 
-        Command c = router.get(chosenRoute).get();
+        CommandFactory commandFactory = router.get(chosenRoute);
+        if (null == commandFactory) {
+            return null;
+        }
+
+        Command c = commandFactory.create();
 
         if ("f".equals(chosenOption)) {
             String customer = chooseCustomer();
@@ -137,6 +149,15 @@ public class CliController implements Controller {
 
     }
 
+    private String chooseDestination() {
+        printReportDestination();
+        String destination = scanner.nextLine();
+        if ("".equals(destination)) {
+            destination = "s";
+        }
+        return destination;
+    }
+
     private String chooseCustomer() {
         printDistinctCustomers();
         System.out.print("Please choose the customer by typing the client id: ");
@@ -156,7 +177,7 @@ public class CliController implements Controller {
                 "s - screen\n" +
                 "c - csv file\n" +
                 "----------------------\n" +
-                "Please choose the destination: "
+                "Please choose the destination (default s): "
         );
     }
 

@@ -1,8 +1,8 @@
 package pl.wmocek.orders.application;
 
 import pl.wmocek.orders.application.command.*;
-import pl.wmocek.orders.application.command.handlers.CreateAllOrdersCSVReportHandlerFactory;
-import pl.wmocek.orders.application.command.handlers.CreateAllOrdersScreenReportHandlerFactory;
+import pl.wmocek.orders.application.command.handlers.*;
+import pl.wmocek.orders.domain.OrdersRepository;
 import pl.wmocek.orders.io.OrderReader;
 
 import java.util.HashMap;
@@ -13,15 +13,22 @@ public class InMemoryCommandBus implements CommandBus {
 
     private Map<String, Supplier<Handler>> resolver = new HashMap<>();
 
-    InMemoryCommandBus(OrderReader orderReader){
-
-
+    InMemoryCommandBus(OrderReader orderReader, OrdersRepository ordersRepository){
 
         setResolverEntry(CreateAllOrdersScreenReport.class,
-            () -> { return new CreateAllOrdersScreenReportHandlerFactory(orderReader).create(); });
+            () -> new CreateAllOrdersScreenReportHandlerFactory(orderReader).create());
 
         setResolverEntry(CreateAllOrdersCSVReport.class,
-            () -> { return new CreateAllOrdersCSVReportHandlerFactory(orderReader).create(); });
+            () -> new CreateAllOrdersCSVReportHandlerFactory(orderReader).create());
+
+        setResolverEntry(CountAllOrdersScreenReport.class,
+            () -> new CountAllOrdersScreenReportFactory(ordersRepository).create());
+
+        setResolverEntry(AveragePriceOfAllOrdersScreenReport.class,
+            () -> new AveragePriceOfAllOrdersScreenReportFactory(ordersRepository).create());
+
+        setResolverEntry(TotalPriceOfAllOrdersScreenReport.class,
+            () -> new TotalPriceOfAllOrdersScreenReportFactory(ordersRepository).create());
     }
 
     private void setResolverEntry(Class<? extends Command> key, Supplier<Handler> supplier) {

@@ -41,7 +41,7 @@ public class App {
             ordersRepository,
             new FileReaderResolver(),
             new CliControllerFactory(ordersRepository).create(),
-            new CommandBusFactory(ordersRepository).create()
+            new CommandBusFactory(ordersRepository, ordersRepository).create()
         );
         app.feedOrdersRepository(args);
         app.run();
