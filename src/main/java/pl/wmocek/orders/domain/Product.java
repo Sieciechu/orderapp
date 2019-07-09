@@ -41,7 +41,19 @@ public class Product {
         this.name = name;
     }
 
-    double getTotalPrice() {
+    public double getTotalPrice() {
         return quantity * unitPrice;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
     }
 }
