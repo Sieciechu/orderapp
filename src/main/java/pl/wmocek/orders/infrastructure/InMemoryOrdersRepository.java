@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class InMemoryOrdersRepository implements OrdersRepository, OrderReader {
+public class InMemoryOrdersRepository implements OrdersRepository, OrderReader, DistinctCustomersRepository {
 
     private List<Order> orders = new ArrayList<>();
 

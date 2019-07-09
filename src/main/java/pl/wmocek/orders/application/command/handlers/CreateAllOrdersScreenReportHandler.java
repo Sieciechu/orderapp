@@ -1,6 +1,8 @@
-package pl.wmocek.orders.application.command;
+package pl.wmocek.orders.application.command.handlers;
 
 import lombok.NonNull;
+import pl.wmocek.orders.application.command.Command;
+import pl.wmocek.orders.application.command.Handler;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.io.OrderReader;
 import pl.wmocek.orders.io.OrderStringer;
@@ -8,22 +10,19 @@ import pl.wmocek.orders.io.Writer;
 
 import java.io.IOException;
 
-class CreateAllOrdersCSVReportHandler implements Handler {
+class CreateAllOrdersScreenReportHandler implements Handler {
     private Writer writer;
     private OrderReader reader;
     private OrderStringer stringer;
-    private String CSVSeparator;
 
-    public CreateAllOrdersCSVReportHandler(
+    public CreateAllOrdersScreenReportHandler(
         @NonNull Writer writer,
         @NonNull OrderReader reader,
-        @NonNull OrderStringer stringer,
-        @NonNull String CSVSeparator
+        @NonNull OrderStringer stringer
     ) {
         this.writer = writer;
         this.reader = reader;
         this.stringer = stringer;
-        this.CSVSeparator = CSVSeparator;
     }
 
     @Override
@@ -32,10 +31,7 @@ class CreateAllOrdersCSVReportHandler implements Handler {
         Order[] orders = new Order[buffSize];
 
         try {
-            writer.write(new String[]{String.join(CSVSeparator,
-                "customerId", "requestId", "product name",
-                "quantity", "unit price", "total price"
-            )});
+            writer.write(new String[]{"All orders:"});
 
             int n=0;
 

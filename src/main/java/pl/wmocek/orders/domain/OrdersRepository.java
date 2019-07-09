@@ -22,6 +22,4 @@ public interface OrdersRepository {
     double getAveragePriceOfOrder();
 
     double getAveragePriceOfOrderForCustomer(CustomerId customerId);
-
-    List<CustomerId> getDistinctCustomers();
 }

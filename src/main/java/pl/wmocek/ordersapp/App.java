@@ -2,7 +2,11 @@
 package pl.wmocek.ordersapp;
 
 import lombok.NonNull;
-import pl.wmocek.orders.domain.CustomerId;
+import pl.wmocek.orders.application.CliControllerFactory;
+import pl.wmocek.orders.application.CommandBus;
+import pl.wmocek.orders.application.CommandBusFactory;
+import pl.wmocek.orders.application.Controller;
+import pl.wmocek.orders.application.command.Command;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.OrdersRepository;
 import pl.wmocek.orders.infrastructure.FileReaderResolver;
@@ -10,144 +14,48 @@ import pl.wmocek.orders.infrastructure.InMemoryOrdersRepository;
 import pl.wmocek.orders.infrastructure.Reader;
 import pl.wmocek.orders.infrastructure.ReaderException;
 
-import java.io.*;
-import java.util.Scanner;
-
 public class App {
 
     private final String FILES_DIR_PATH = "/home/wojciech/Projects/orderapp2/src/main/resources/";
     private OrdersRepository ordersRepository;
     private FileReaderResolver readerFactory;
-    private Scanner scanner;
+    private Controller controller;
+    private CommandBus commandBus;
 
-    private App(@NonNull OrdersRepository o, @NonNull FileReaderResolver r, Scanner s) {
+    private App(
+        @NonNull OrdersRepository o,
+        @NonNull FileReaderResolver r,
+        @NonNull Controller c,
+        @NonNull CommandBus cb
+    ) {
         ordersRepository = o;
         readerFactory = r;
-        scanner = s;
+        controller = c;
+        commandBus = cb;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
+        InMemoryOrdersRepository ordersRepository = new InMemoryOrdersRepository();
         var app = new App(
-            new InMemoryOrdersRepository(),
+            ordersRepository,
             new FileReaderResolver(),
-            new Scanner(System.in)
+            new CliControllerFactory(ordersRepository).create(),
+            new CommandBusFactory(ordersRepository).create()
         );
         app.feedOrdersRepository(args);
         app.run();
     }
 
-    private void run() throws IOException {
-        System.out.print(
-            "Welcome to the Shop.\n" +
-            "----------------------------------------------------\n" +
-            "List of available reports:\n" +
-            "q - Quit\n" +
-            "a - Count all orders,\n" +
-            "b - Count orders for given customer,\n" +
-            "c - Total price of all orders,\n" +
-            "d - Total price of all orders for given customer\n" +
-            "e - List of all orders,\n" +
-            "f - List of orders for given customer,\n" +
-            "g - Average price of all orders,\n" +
-            "h - Average price of all orders for given customer.\n" +
-            "----------------------------------------------------\n" +
-            "Please choose the action: "
-        );
+    private void run() throws Exception {
+        while(true){
+            Command c = controller.getCommand();
+            if (null == c) {
+                break;
+            }
 
-        String chosenOption = scanner.nextLine();
-        if ("q".equals(chosenOption)) {
-            return;
+            commandBus.send(c);
         }
-        String a = "";
-        String result = "";
-
-        if ("a".equals(chosenOption)) {
-            a = "The total number of all orders";
-            result = String.valueOf(ordersRepository.countAllOrders());
-        }
-
-        if ("b".equals(chosenOption)) {
-            System.out.println("List of customers:");
-            ordersRepository.getDistinctCustomers().forEach(customerId -> {
-                System.out.println(" - '" + customerId + "'");
-            });
-            System.out.print("Please choose the customer by typing the client id: ");
-            String client = scanner.nextLine();
-
-            a = "Total number of all orders for customer '" + client + "'";
-            result = String.valueOf(ordersRepository.countOrdersForCustomer(new CustomerId(client)));
-        }
-
-        if ("c".equals(chosenOption)) {
-            a = "Total price of all orders";
-            result = String.valueOf(ordersRepository.sumPriceOfAllOrders());
-        }
-
-        if ("d".equals(chosenOption)) {
-            System.out.println("List of customers:");
-            ordersRepository.getDistinctCustomers().forEach(customerId -> {
-                System.out.println(" - '" + customerId + "'");
-            });
-            System.out.print("Please choose the customer by typing the client id: ");
-            String client = scanner.nextLine();
-
-            a = "Total price of all orders for customer '" + client + "'";
-            result = String.valueOf(ordersRepository.sumPriceOfOrdersForCustomer(new CustomerId(client)));
-        }
-
-        if ("e".equals(chosenOption)) {
-            a = "List of all orders";
-            var orders = ordersRepository.getAll();
-            result = "";
-        }
-
-        if ("f".equals(chosenOption)) {
-            System.out.println("List of customers:");
-            ordersRepository.getDistinctCustomers().forEach(customerId -> {
-                System.out.println(" - '" + customerId + "'");
-            });
-            System.out.print("Please choose the customer by typing the client id: ");
-            String client = scanner.nextLine();
-
-            a = "List of orders for customer '" + client + "'";
-            result = "";
-        }
-
-        if ("g".equals(chosenOption)) {
-            a = "Average price of all orders";
-            result = String.valueOf(ordersRepository.getAveragePriceOfOrder());
-        }
-
-        if ("h".equals(chosenOption)) {
-            System.out.println("List of customers:");
-            ordersRepository.getDistinctCustomers().forEach(customerId -> {
-                System.out.println(" - '" + customerId + "'");
-            });
-            System.out.print("Please choose the customer by typing the client id: ");
-            String client = scanner.nextLine();
-
-            a = "Average price of all orders for customer '" + client + "'";
-            result = String.valueOf(ordersRepository.getAveragePriceOfOrderForCustomer(new CustomerId(client)));
-        }
-
-        System.out.print(
-            "Report's destination:\n" +
-                "s - screen\n" +
-                "c - csv file\n" +
-                "----------------------\n" +
-                "Please choose the destination: "
-        );
-        String reportDestination = scanner.nextLine();
-        Writer writer = null;
-        if ("s".equals(reportDestination)) {
-            writer = new BufferedWriter(new OutputStreamWriter(System.out));
-        } else if ("c".equals(reportDestination)) {
-            writer = new PrintWriter(new BufferedWriter(new FileWriter(FILES_DIR_PATH + "report.csv")));
-        }
-        writer.write(a + "\n");
-        writer.write(result + "\n");
-        writer.flush();
 
     }
 

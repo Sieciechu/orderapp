@@ -1,10 +1,12 @@
-package pl.wmocek.orders.application.command;
+package pl.wmocek.orders.application.command.handlers;
 
+import pl.wmocek.orders.application.command.Handler;
+import pl.wmocek.orders.application.command.HandlerFactory;
 import pl.wmocek.orders.io.OrderReader;
 import pl.wmocek.orders.io.OrderScreenFormatter;
 import pl.wmocek.orders.io.ScreenWriterFactory;
 
-class CreateAllOrdersScreenReportHandlerFactory implements HandlerFactory {
+public class CreateAllOrdersScreenReportHandlerFactory implements HandlerFactory {
 
     private OrderReader orderReader;
 
