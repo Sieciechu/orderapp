@@ -17,6 +17,9 @@ class BasicWriter implements Writer {
             out.write(s + "\n");
             ++n;
         }
+
+        out.flush();
+
         return n;
     }
 }
