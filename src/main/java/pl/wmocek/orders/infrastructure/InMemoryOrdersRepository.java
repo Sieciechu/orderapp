@@ -2,32 +2,43 @@ package pl.wmocek.orders.infrastructure;
 
 import lombok.NonNull;
 import pl.wmocek.orders.domain.*;
+import pl.wmocek.orders.io.OrderReader;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class InMemoryOrdersRepository implements OrdersRepository {
+public class InMemoryOrdersRepository implements OrdersRepository, OrderReader {
 
-    private Map<RequestId, Order> orders = new HashMap<>();
+    private List<Order> orders = new ArrayList<>();
+
+    private int readPosition = 0;
 
     @Override
-    public void store(@NonNull Order order) throws OrderAlreadyExistsException {
+    public void store(@NonNull Order newOrder) throws OrderAlreadyExistsException {
 
-        if (orders.containsKey(order.getRequestId())) {
-            throw new OrderAlreadyExistsException(order.getCustomerId(), order.getRequestId());
+        Optional<Order> order = orders.stream()
+            .filter(o -> o.getRequestId().equals(newOrder.getRequestId()))
+            .findFirst();
+
+
+        if (order.isPresent()) {
+            throw new OrderAlreadyExistsException(newOrder.getCustomerId(), newOrder.getRequestId());
         }
 
-        orders.put(order.getRequestId(), order);
+        orders.add(newOrder);
     }
 
     @Override
-    public void add(@NonNull Order order) {
-        orders.merge(order.getRequestId(), order, (existingOrder, addingOrder) -> {
-            existingOrder.addProducts(addingOrder.getProducts());
-            return existingOrder;
-        });
+    public void add(@NonNull Order newOrder) {
+
+        orders.stream()
+            .filter(o -> o.getRequestId().equals(newOrder.getRequestId()))
+            .findFirst()
+            .ifPresentOrElse(
+                (Order o) -> o.addProducts(newOrder.getProducts()),
+                () -> orders.add(newOrder)
+            );
     }
 
     @Override
@@ -37,31 +48,31 @@ public class InMemoryOrdersRepository implements OrdersRepository {
 
     @Override
     public int countOrdersForCustomer(@NonNull CustomerId customerId) {
-        return (int) orders.values().stream()
+        return (int) orders.stream()
             .filter(order -> order.getCustomerId().equals(customerId))
             .count();
     }
 
     @Override
     public double sumPriceOfAllOrders() {
-        return orders.values().stream().mapToDouble(Order::getTotalPrice).sum();
+        return orders.stream().mapToDouble(Order::getTotalPrice).sum();
     }
 
     @Override
     public double sumPriceOfOrdersForCustomer(@NonNull CustomerId customerId) {
-        return orders.values().stream()
+        return orders.stream()
             .filter(order -> order.getCustomerId().equals(customerId))
             .mapToDouble(Order::getTotalPrice).sum();
     }
 
     @Override
     public List<Order> getAll() {
-        return orders.values().stream().collect(Collectors.toUnmodifiableList());
+        return orders.stream().collect(Collectors.toUnmodifiableList());
     }
 
     @Override
     public List<Order> getOrdersForCustomer(@NonNull CustomerId customerId) {
-        return orders.values().stream()
+        return orders.stream()
             .filter(order -> order.getCustomerId().equals(customerId))
             .collect(Collectors.toUnmodifiableList());
 
@@ -69,20 +80,47 @@ public class InMemoryOrdersRepository implements OrdersRepository {
 
     @Override
     public double getAveragePriceOfOrder() {
-        return orders.values().stream().collect(Collectors.averagingDouble(Order::getTotalPrice));
+        return orders.stream().collect(Collectors.averagingDouble(Order::getTotalPrice));
     }
 
     @Override
     public double getAveragePriceOfOrderForCustomer(@NonNull CustomerId customerId) {
-        return orders.values().stream()
+        return orders.stream()
             .filter(order -> order.getCustomerId().equals(customerId))
             .collect(Collectors.averagingDouble(Order::getTotalPrice));
     }
 
     @Override
     public List<CustomerId> getDistinctCustomers() {
-        return orders.values().stream()
+        return orders.stream()
             .map(Order::getCustomerId)
             .distinct().collect(Collectors.toList());
+    }
+
+    @Override
+    public int read(Order[] buff) throws IOException {
+        int n = 0;
+
+        for (int i = 0; i < buff.length; i++) {
+            buff[i] = null;
+        }
+
+        int repoSize = this.orders.size();
+
+        if(readPosition >= repoSize) {
+            return OrderReader.EOT;
+        }
+
+        for (int i = 0; i < buff.length; ++i) {
+            buff[i] = this.orders.get(readPosition);
+            ++readPosition;
+            ++n;
+
+            if(readPosition >= repoSize) {
+                return n;
+            }
+        }
+
+        return n;
     }
 }

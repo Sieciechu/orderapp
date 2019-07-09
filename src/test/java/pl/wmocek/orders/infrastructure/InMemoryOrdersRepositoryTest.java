@@ -9,7 +9,9 @@ import pl.wmocek.orders.domain.CustomerId;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.OrderAlreadyExistsException;
 import pl.wmocek.orders.domain.Product;
+import pl.wmocek.orders.io.OrderReader;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -322,5 +324,59 @@ class InMemoryOrdersRepositoryTest {
         Assertions.assertTrue(clients.contains(new CustomerId("2")));
         Assertions.assertTrue(clients.contains(new CustomerId("3")));
 
+    }
+
+    @Test
+    void whenReadRepositoryThenOrdersBufferIsFilledWithOrders() throws IOException {
+        // given
+        repository = new InMemoryOrdersRepository();
+        repository.add(Order.create("1", 1, new Product("bread", 1, 2.5)));
+        repository.add(Order.create("1", 1, new Product("chocolate", 2, 1.5)));
+        repository.add(Order.create("1", 3, new Product("butter", 1, 3.0)));
+        repository.add(Order.create("2", 5, new Product("bread", 2, 2.5)));
+        repository.add(Order.create("3", 6, new Product("butter", 1, 3.0)));
+
+        Order[] ordersBuffer = new Order[10];
+
+        // when
+        int numberOfReadOrders = repository.read(ordersBuffer);
+
+        // then
+        Assertions.assertEquals(4, numberOfReadOrders);
+
+        Order expectedOrder = Order.create("1", 1, Arrays.asList(
+            new Product("bread", 1, 2.5),
+            new Product("chocolate", 2, 1.5)
+        ));
+        Assertions.assertEquals(expectedOrder, ordersBuffer[0]);
+
+
+        for (int i = numberOfReadOrders; i < ordersBuffer.length; i++) {
+            Assertions.assertNull(ordersBuffer[i]);
+        }
+    }
+
+    @Test
+    void whenThereAreNoMoreOrdersToReadThenOrdersBufferIsEmpty() throws IOException {
+        // given
+        repository = new InMemoryOrdersRepository();
+        repository.add(Order.create("1", 1, new Product("bread", 1, 2.5)));
+        repository.add(Order.create("1", 1, new Product("chocolate", 2, 1.5)));
+        repository.add(Order.create("1", 3, new Product("butter", 1, 3.0)));
+        repository.add(Order.create("2", 5, new Product("bread", 2, 2.5)));
+        repository.add(Order.create("3", 6, new Product("butter", 1, 3.0)));
+
+        Order[] ordersBuffer = new Order[9];
+        int numberOfReadOrders = 0;
+        numberOfReadOrders = repository.read(ordersBuffer);
+
+        // when-then
+        numberOfReadOrders = repository.read(ordersBuffer);
+        Assertions.assertEquals(OrderReader.EOT, numberOfReadOrders);
+        Assertions.assertArrayEquals(new Order[9], ordersBuffer);
+
+        numberOfReadOrders = repository.read(ordersBuffer);
+        Assertions.assertEquals(OrderReader.EOT, numberOfReadOrders);
+        Assertions.assertArrayEquals(new Order[9], ordersBuffer);
     }
 }
