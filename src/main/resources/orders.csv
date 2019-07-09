@@ -1,5 +1,5 @@
 Client_Id,Request_id,Name,Quantity,Price
-1,1,Bułka,1,10.00
-1,1,Chleb,2,15.00
-1,2,Chleb,5,15.00
-2,3,Chleb,1,10.00
+1,1,Bułka,1,10.10
+1,1,Chleb,2,15.20
+1,2,Chleb,5,15.30
+2,3,Chleb,1,10.40
