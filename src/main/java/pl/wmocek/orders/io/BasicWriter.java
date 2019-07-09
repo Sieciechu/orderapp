@@ -2,11 +2,11 @@ package pl.wmocek.orders.io;
 
 import java.io.IOException;
 
-class ScreenWriter implements Writer {
+class BasicWriter implements Writer {
 
     private java.io.Writer out;
 
-    ScreenWriter(java.io.Writer out) {
+    BasicWriter(java.io.Writer out) {
         this.out = out;
     }
 

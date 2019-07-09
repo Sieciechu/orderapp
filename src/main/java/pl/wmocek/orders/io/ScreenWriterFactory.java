@@ -3,9 +3,9 @@ package pl.wmocek.orders.io;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 
-class ScreenWriterFactory {
+public class ScreenWriterFactory {
 
-    Writer create(){
-        return new ScreenWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+    public Writer create(){
+        return new BasicWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
     }
 }
