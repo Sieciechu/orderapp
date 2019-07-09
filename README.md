@@ -32,7 +32,7 @@ Using docker:
 
 `$ docker image build -t order-app .`
 
-`$ docker container run --rm -it order-app /app/input/orders.csv /app/input/orders.xml`
+`$ docker container run --rm -it order-app`
 
 <a name="description"></a>
 ### More details
