@@ -1,9 +1,10 @@
 # Readme
-# Table of Contents
-  * [Chapter 1](#chapter-1)
-  * [Chapter 2](#chapter-2)
-  * [Chapter 3](#chapter-3)
+### Table of Contents
+  * [Build](#build)
+  * [Run](#run)
+  * [Description](#description)
 
+<a name="build"></a>
 ### Build
 #### Using gradle:
 `$ ./gradlew build`
@@ -19,6 +20,7 @@
 #### Using docker:
 `$ docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project -u "gradle:gradle" gradle:jdk11 gradle task test`
 
+<a name="run"></a>
 ### Run:
 #### Locally:
 `$ java -jar build/libs/orderapp.jar`
@@ -28,7 +30,8 @@
 
 `$ docker container run --rm order-app`
 
-### Description <a name="chapter-1"></a>
+<a name="description"></a>
+### Description
 #### Application for handling orders.
 1. The application accepts input params. The input params is list of csv and xml files
 2. Each file contains one or more orders (check the format in resources dir, in the example orders.csv, orders.xml)
