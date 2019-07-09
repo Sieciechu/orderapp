@@ -17,8 +17,9 @@ public class OrderScreenFormatter implements OrderStringer {
             }
 
             var sb = new StringBuilder();
-            sb.append(String.format("Request id: %s | Customer '%s' ordered products:\n",
-                buff[i].getCustomerId(), buff[i].getRequestId()
+            sb.append(String.format(
+                "Request id: %s | Customer '%s' ordered products:\n\n",
+                buff[i].getRequestId(), buff[i].getCustomerId()
             ));
 
             for (Product p : buff[i].getProducts()) {
@@ -26,6 +27,9 @@ public class OrderScreenFormatter implements OrderStringer {
                     p.getName(), p.getQuantity(), p.getUnitPrice(), p.getTotalPrice())
                 );
             }
+            sb.append("\n");
+            sb.append(String.format("Total price: %.2f\n", buff[i].getTotalPrice()));
+            sb.append("--------------------------------------------------\n");
             sb.append("\n");
             stringedOrders[i] = sb.toString();
         }
