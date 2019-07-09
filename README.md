@@ -1,38 +1,42 @@
-# Readme
-### Table of Contents
-  * [Build](#build)
-  * [Run](#run)
-  * [Description](#description)
+## Introduction
+This is application for handling orders. Feeds in memory database from xml and csv files.
+Allows to print reports to the screen and to a CSV file. I treat this app as an excercise for learning java.
+
+Table of Contents:
+* [Build](#build)
+* [Run](#run)
+* [More details](#description)
+--- 
 
 <a name="build"></a>
 ### Build
-#### Using gradle:
+Using gradle:
 `$ ./gradlew build`
 
-#### Using docker:
-
+Using docker:
 `$ docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project -u "gradle:gradle" gradle:jdk11 gradle build`
 
 ### Test:
-#### Using gradle:
-`$ ./gradlew build`
+Using gradle:
+`$ ./gradlew test`
 
-#### Using docker:
-`$ docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project -u "gradle:gradle" gradle:jdk11 gradle task test`
+Using docker:
+`$ docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project -u "gradle:gradle" gradle:jdk11 gradle test`
 
 <a name="run"></a>
-### Run:
-#### Locally:
-`$ java -jar build/libs/orderapp.jar`
+#### Run:
+Locally:
+`$ java -jar build/libs/orderapp-all.jar "$PWD/src/main/resources/orders.csv" "$PWD/src/main/resources/orders.xml"`
 
-#### Using docker:
+Using docker:
+
 `$ docker image build -t order-app .`
 
-`$ docker container run --rm order-app`
+`$ docker container run --rm -it order-app /app/input/orders.csv /app/input/orders.xml`
 
 <a name="description"></a>
-### Description
-#### Application for handling orders.
+### More details
+Application for handling orders. Requirements:
 1. The application accepts input params. The input params is list of csv and xml files
 2. Each file contains one or more orders (check the format in resources dir, in the example orders.csv, orders.xml)
 3. Each order need to be stored in "data base" (it can be in memory db)
