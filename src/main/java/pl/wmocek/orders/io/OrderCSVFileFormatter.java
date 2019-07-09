@@ -4,7 +4,7 @@ import lombok.NonNull;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.Product;
 
-class OrderCSVFileFormatter implements OrderStringer {
+public class OrderCSVFileFormatter implements OrderStringer {
 
     private String separator;
 

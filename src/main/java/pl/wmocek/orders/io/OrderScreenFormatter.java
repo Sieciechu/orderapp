@@ -4,7 +4,7 @@ import lombok.NonNull;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.Product;
 
-class OrderScreenFormatter implements OrderStringer {
+public class OrderScreenFormatter implements OrderStringer {
 
     @Override
     public String[] toString(@NonNull Order[] buff) {
