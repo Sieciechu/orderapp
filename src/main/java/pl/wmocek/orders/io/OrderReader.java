@@ -24,7 +24,7 @@ public interface OrderReader {
     int read(Order[] buff) throws IOException;
 
     /**
-     * Rewinds pointer to underlying data stream to the beginning. So the data stream can be read aain using the read() method
+     * Rewinds pointer to underlying data stream to the beginning. So the data stream can be read again using the read() method
      */
     void rewind();
 }
