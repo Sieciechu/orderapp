@@ -7,7 +7,7 @@ import pl.wmocek.orders.io.ScreenWriterFactory;
 
 public class CountAllOrdersForCustomerScreenReportFactory implements HandlerFactory {
 
-    private OrdersRepository ordersRepository;
+    private final OrdersRepository ordersRepository;
 
     public CountAllOrdersForCustomerScreenReportFactory(OrdersRepository r) {
         ordersRepository = r;

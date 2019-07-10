@@ -7,7 +7,7 @@ import pl.wmocek.orders.io.ScreenWriterFactory;
 
 public class AveragePriceOfAllOrdersForCustomerScreenReportFactory implements HandlerFactory {
 
-    private OrdersRepository ordersRepository;
+    private final OrdersRepository ordersRepository;
 
     public AveragePriceOfAllOrdersForCustomerScreenReportFactory(OrdersRepository r) {
         ordersRepository = r;

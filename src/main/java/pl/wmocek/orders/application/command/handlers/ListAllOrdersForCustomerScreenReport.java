@@ -6,17 +6,15 @@ import pl.wmocek.orders.application.command.Handler;
 import pl.wmocek.orders.domain.CustomerId;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.OrdersRepository;
-import pl.wmocek.orders.io.OrderReader;
 import pl.wmocek.orders.io.OrderStringer;
 import pl.wmocek.orders.io.Writer;
 
 import java.io.IOException;
-import java.util.List;
 
 class ListAllOrdersForCustomerScreenReport implements Handler {
-    private Writer writer;
-    private OrdersRepository ordersRepository;
-    private OrderStringer stringer;
+    private final Writer writer;
+    private final OrdersRepository ordersRepository;
+    private final OrderStringer stringer;
 
     public ListAllOrdersForCustomerScreenReport(
         @NonNull Writer writer,
@@ -29,7 +27,7 @@ class ListAllOrdersForCustomerScreenReport implements Handler {
     }
 
     @Override
-    public void handle(Command command) throws Exception {
+    public void handle(Command command) {
 
         String customerId = command.getData("customerId");
 

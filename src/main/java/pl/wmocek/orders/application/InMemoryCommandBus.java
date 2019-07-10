@@ -15,11 +15,11 @@ public class InMemoryCommandBus implements CommandBus {
 
     InMemoryCommandBus(OrderReader orderReader, OrdersRepository ordersRepository){
 
-        setResolverEntry(CreateAllOrdersScreenReport.class,
-            () -> new CreateAllOrdersScreenReportHandlerFactory(orderReader).create());
+        setResolverEntry(ListAllOrdersScreenReport.class,
+            () -> new ListAllOrdersScreenReportHandlerFactory(orderReader).create());
 
-        setResolverEntry(CreateAllOrdersCSVReport.class,
-            () -> new CreateAllOrdersCSVReportHandlerFactory(orderReader).create());
+        setResolverEntry(ListAllOrdersCSVReport.class,
+            () -> new ListAllOrdersCSVReportHandlerFactory(orderReader).create());
 
         setResolverEntry(CountAllOrdersScreenReport.class,
             () -> new CountAllOrdersScreenReportFactory(ordersRepository).create());
@@ -50,7 +50,11 @@ public class InMemoryCommandBus implements CommandBus {
 
     @Override
     public void send(Command c) throws Exception {
-        Handler h = resolver.get(c.getClass().getCanonicalName()).get();
+        Handler h = getHandler(c);
         h.handle(c);
+    }
+
+    private Handler getHandler(Command c) {
+        return resolver.get(c.getClass().getCanonicalName()).get();
     }
 }

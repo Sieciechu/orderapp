@@ -10,38 +10,30 @@ import pl.wmocek.orders.io.Writer;
 
 import java.io.IOException;
 
-class CreateAllOrdersCSVReportHandler implements Handler {
-    private Writer writer;
-    private OrderReader reader;
-    private OrderStringer stringer;
-    private String CSVSeparator;
+class ListAllOrdersScreenReportHandler implements Handler {
+    private final Writer writer;
+    private final OrderReader reader;
+    private final OrderStringer stringer;
 
-    public CreateAllOrdersCSVReportHandler(
+    public ListAllOrdersScreenReportHandler(
         @NonNull Writer writer,
         @NonNull OrderReader reader,
-        @NonNull OrderStringer stringer,
-        @NonNull String CSVSeparator
+        @NonNull OrderStringer stringer
     ) {
         this.writer = writer;
         this.reader = reader;
         this.stringer = stringer;
-        this.CSVSeparator = CSVSeparator;
     }
 
     @Override
-    public void handle(Command command) throws Exception {
+    public void handle(Command command) {
         final int buffSize = 3;
         Order[] orders = new Order[buffSize];
 
         try {
-            writer.write(new String[]{String.join(CSVSeparator,
-                "customerId", "requestId", "product name",
-                "quantity", "unit price", "total price"
-            )});
+            writer.write(new String[]{"All orders:"});
 
-            int n=0;
-
-            while ((n = reader.read(orders)) != OrderReader.EOT) {
+            while (reader.read(orders) != OrderReader.EOT) {
                 String[] stringedOrders = stringer.toString(orders);
                 writer.write(stringedOrders);
             }

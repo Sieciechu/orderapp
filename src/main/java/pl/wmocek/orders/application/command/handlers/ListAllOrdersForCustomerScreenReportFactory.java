@@ -8,7 +8,7 @@ import pl.wmocek.orders.io.ScreenWriterFactory;
 
 public class ListAllOrdersForCustomerScreenReportFactory implements HandlerFactory {
 
-    private OrdersRepository ordersRepository;
+    private final OrdersRepository ordersRepository;
 
     public ListAllOrdersForCustomerScreenReportFactory(OrdersRepository ordersRepository) {
         this.ordersRepository = ordersRepository;

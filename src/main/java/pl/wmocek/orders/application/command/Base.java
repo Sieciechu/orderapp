@@ -2,13 +2,13 @@ package pl.wmocek.orders.application.command;
 
 public abstract class Base implements Command {
 
-    private CommandData commandData;
+    private final CommandData commandData;
 
-    public Base() {
+    Base() {
         commandData = new CommandData();
     }
 
-    public Base(CommandData commandData) {
+    Base(CommandData commandData) {
         this.commandData = commandData;
     }
 

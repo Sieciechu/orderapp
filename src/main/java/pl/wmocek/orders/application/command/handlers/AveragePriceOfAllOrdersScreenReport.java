@@ -9,10 +9,10 @@ import pl.wmocek.orders.io.Writer;
 import java.io.IOException;
 
 class AveragePriceOfAllOrdersScreenReport implements Handler {
-    private Writer writer;
-    private OrdersRepository repository;
+    private final Writer writer;
+    private final OrdersRepository repository;
 
-    public AveragePriceOfAllOrdersScreenReport(
+    AveragePriceOfAllOrdersScreenReport(
         @NonNull Writer writer,
         @NonNull OrdersRepository repository
     ) {
@@ -21,7 +21,7 @@ class AveragePriceOfAllOrdersScreenReport implements Handler {
     }
 
     @Override
-    public void handle(Command command) throws Exception {
+    public void handle(Command command) {
 
         try {
             var value = repository.getAveragePriceOfOrder();

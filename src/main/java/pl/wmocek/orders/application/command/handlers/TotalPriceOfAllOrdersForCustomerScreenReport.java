@@ -10,8 +10,8 @@ import pl.wmocek.orders.io.Writer;
 import java.io.IOException;
 
 class TotalPriceOfAllOrdersForCustomerScreenReport implements Handler {
-    private Writer writer;
-    private OrdersRepository repository;
+    private final Writer writer;
+    private final OrdersRepository repository;
 
     public TotalPriceOfAllOrdersForCustomerScreenReport(
         @NonNull Writer writer,
@@ -22,7 +22,7 @@ class TotalPriceOfAllOrdersForCustomerScreenReport implements Handler {
     }
 
     @Override
-    public void handle(Command command) throws Exception {
+    public void handle(Command command) {
 
         String customerId = command.getData("customerId");
 

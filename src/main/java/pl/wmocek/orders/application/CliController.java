@@ -23,9 +23,9 @@ public class CliController implements Controller {
         setRoute("cs", TotalPriceOfAllOrdersScreenReport::new);
         setRoute("ds", TotalPriceOfAllOrdersForCustomerScreenReport::new);
 //        router.put("ac", () -> new CountAllOrdersCSVReport());
-//        router.put("ec", () -> new CreateAllOrdersCSVReport());
-        setRoute("es", CreateAllOrdersScreenReport::new);
-//        router.put("fc", () -> new CreateOrdersForCustomerCSVReport());
+//        router.put("ec", () -> new ListAllOrdersCSVReport());
+        setRoute("es", ListAllOrdersScreenReport::new);
+//        router.put("fc", () -> new ListOrdersForCustomerCSVReport());
         setRoute("fs", ListAllOrdersForCustomerScreenReport::new);
         setRoute("gs", AveragePriceOfAllOrdersScreenReport::new);
         setRoute("hs", AveragePriceOfAllOrdersForCustomerScreenReport::new);

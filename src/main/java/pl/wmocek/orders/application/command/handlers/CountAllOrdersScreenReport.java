@@ -9,8 +9,8 @@ import pl.wmocek.orders.io.Writer;
 import java.io.IOException;
 
 class CountAllOrdersScreenReport implements Handler {
-    private Writer writer;
-    private OrdersRepository repository;
+    private final Writer writer;
+    private final OrdersRepository repository;
 
     public CountAllOrdersScreenReport(
         @NonNull Writer writer,
@@ -21,7 +21,7 @@ class CountAllOrdersScreenReport implements Handler {
     }
 
     @Override
-    public void handle(Command command) throws Exception {
+    public void handle(Command command) {
 
         try {
             var value = repository.countAllOrders();
