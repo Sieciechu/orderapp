@@ -16,10 +16,10 @@ public class InMemoryCommandBus implements CommandBus {
     InMemoryCommandBus(OrderReader orderReader, OrdersRepository ordersRepository){
 
         setResolverEntry(ListAllOrdersScreenReport.class,
-            () -> new ListAllOrdersScreenReportHandlerFactory(orderReader).create());
+            () -> new ListAllOrdersScreenReportFactory(orderReader).create());
 
         setResolverEntry(ListAllOrdersCSVReport.class,
-            () -> new ListAllOrdersCSVReportHandlerFactory(orderReader).create());
+            () -> new ListAllOrdersCSVReportFactory(orderReader).create());
 
         setResolverEntry(CountAllOrdersScreenReport.class,
             () -> new CountAllOrdersScreenReportFactory(ordersRepository).create());

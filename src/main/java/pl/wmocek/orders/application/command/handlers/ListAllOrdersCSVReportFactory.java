@@ -5,18 +5,18 @@ import pl.wmocek.orders.application.command.HandlerFactory;
 import pl.wmocek.orders.io.OrderCSVFileFormatter;
 import pl.wmocek.orders.io.OrderReader;
 
-public class ListAllOrdersCSVReportHandlerFactory implements HandlerFactory {
+public class ListAllOrdersCSVReportFactory implements HandlerFactory {
     private final OrderReader orderReader;
 
     private final String separator = ",";
 
-    public ListAllOrdersCSVReportHandlerFactory(OrderReader orderReader) {
+    public ListAllOrdersCSVReportFactory(OrderReader orderReader) {
         this.orderReader = orderReader;
     }
 
     @Override
     public Handler create() {
-        return new ListAllOrdersCSVReportHandler(
+        return new ListAllOrdersCSVReport(
             null,
             orderReader,
             new OrderCSVFileFormatter(separator),

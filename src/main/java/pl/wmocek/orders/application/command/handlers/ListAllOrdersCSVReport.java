@@ -10,13 +10,13 @@ import pl.wmocek.orders.io.Writer;
 
 import java.io.IOException;
 
-class ListAllOrdersCSVReportHandler implements Handler {
+class ListAllOrdersCSVReport implements Handler {
     private final Writer writer;
     private final OrderReader reader;
     private final OrderStringer stringer;
     private final String CSVSeparator;
 
-    public ListAllOrdersCSVReportHandler(
+    public ListAllOrdersCSVReport(
         @NonNull Writer writer,
         @NonNull OrderReader reader,
         @NonNull OrderStringer stringer,
