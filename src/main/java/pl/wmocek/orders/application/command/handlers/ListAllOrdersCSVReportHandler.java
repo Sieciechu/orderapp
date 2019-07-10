@@ -46,6 +46,8 @@ class ListAllOrdersCSVReportHandler implements Handler {
 
         } catch (IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
+        } finally {
+            reader.rewind();
         }
     }
 }

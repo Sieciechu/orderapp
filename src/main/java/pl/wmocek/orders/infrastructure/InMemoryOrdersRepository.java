@@ -123,4 +123,9 @@ public class InMemoryOrdersRepository implements OrdersRepository, OrderReader, 
 
         return n;
     }
+
+    @Override
+    public void rewind() {
+        readPosition = 0;
+    }
 }
