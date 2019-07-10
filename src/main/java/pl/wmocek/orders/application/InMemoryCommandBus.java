@@ -29,6 +29,18 @@ public class InMemoryCommandBus implements CommandBus {
 
         setResolverEntry(TotalPriceOfAllOrdersScreenReport.class,
             () -> new TotalPriceOfAllOrdersScreenReportFactory(ordersRepository).create());
+
+        setResolverEntry(CountAllOrdersForCustomerScreenReport.class,
+            () -> new CountAllOrdersForCustomerScreenReportFactory(ordersRepository).create());
+
+        setResolverEntry(AveragePriceOfAllOrdersForCustomerScreenReport.class,
+            () -> new AveragePriceOfAllOrdersForCustomerScreenReportFactory(ordersRepository).create());
+
+        setResolverEntry(TotalPriceOfAllOrdersForCustomerScreenReport.class,
+            () -> new TotalPriceOfAllOrdersForCustomerScreenReportFactory(ordersRepository).create());
+
+        setResolverEntry(ListAllOrdersForCustomerScreenReport.class,
+            () -> new ListAllOrdersForCustomerScreenReportFactory(ordersRepository).create());
     }
 
     private void setResolverEntry(Class<? extends Command> key, Supplier<Handler> supplier) {
@@ -40,6 +52,5 @@ public class InMemoryCommandBus implements CommandBus {
     public void send(Command c) throws Exception {
         Handler h = resolver.get(c.getClass().getCanonicalName()).get();
         h.handle(c);
-        System.out.println("Senddddd");
     }
 }

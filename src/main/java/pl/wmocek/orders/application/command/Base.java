@@ -1,11 +1,19 @@
 package pl.wmocek.orders.application.command;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class Base implements Command {
+
+    private CommandData commandData;
+
+    public Base() {
+        commandData = new CommandData();
+    }
+
+    public Base(CommandData commandData) {
+        this.commandData = commandData;
+    }
+
     @Override
-    public Map<String, String> getData() {
-        return new HashMap<>();
+    public String getData(String key) {
+        return commandData.get(key);
     }
 }

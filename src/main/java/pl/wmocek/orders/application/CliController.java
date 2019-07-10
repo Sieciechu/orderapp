@@ -18,14 +18,18 @@ public class CliController implements Controller {
         this.repository = repository;
         this.scanner = scanner;
 
-        setRoute("as", () -> new CountAllOrdersScreenReport());
-        setRoute("cs", () -> new TotalPriceOfAllOrdersScreenReport());
+        setRoute("as", CountAllOrdersScreenReport::new);
+        setRoute("bs", CountAllOrdersForCustomerScreenReport::new);
+        setRoute("cs", TotalPriceOfAllOrdersScreenReport::new);
+        setRoute("ds", TotalPriceOfAllOrdersForCustomerScreenReport::new);
 //        router.put("ac", () -> new CountAllOrdersCSVReport());
 //        router.put("ec", () -> new CreateAllOrdersCSVReport());
-        setRoute("es", () -> new CreateAllOrdersScreenReport());
+        setRoute("es", CreateAllOrdersScreenReport::new);
 //        router.put("fc", () -> new CreateOrdersForCustomerCSVReport());
-        setRoute("fs", () -> new CreateOrdersForCustomerScreenReport());
-        setRoute("gs", () -> new AveragePriceOfAllOrdersScreenReport());
+        setRoute("fs", ListAllOrdersForCustomerScreenReport::new);
+        setRoute("gs", AveragePriceOfAllOrdersScreenReport::new);
+        setRoute("hs", AveragePriceOfAllOrdersForCustomerScreenReport::new);
+
     }
 
     private void setRoute(String key, CommandFactory factory) {
@@ -41,6 +45,17 @@ public class CliController implements Controller {
             return null;
         }
 
+        CommandData commandData = new CommandData();
+
+        switch (chosenOption) {
+            case "b": case "d": case "f": case "h":
+                String customer = chooseCustomer();
+                commandData.put("customerId", customer);
+                break;
+            default:
+                break;
+        }
+
         String reportDestination = chooseDestination();
         String chosenRoute = chosenOption + reportDestination;
 
@@ -49,13 +64,8 @@ public class CliController implements Controller {
             return null;
         }
 
-        Command c = commandFactory.create();
 
-        if ("f".equals(chosenOption)) {
-            String customer = chooseCustomer();
-            c.getData().put("customerId", customer);
-        }
-
+        Command c = commandFactory.create(commandData);
         return c;
 
         /*
