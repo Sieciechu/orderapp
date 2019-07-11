@@ -26,7 +26,7 @@ class AveragePriceOfAllOrdersForCustomerScreenReport implements Handler {
 
         String customerId = command.getData("customerId");
 
-        var value = repository.sumPriceOfOrdersForCustomer(new CustomerId(customerId));
+        var value = repository.getAveragePriceOfOrderForCustomer(new CustomerId(customerId));
 
         String text = String.format("\nThe average price of all orders for customer '%s' : %.2f\n",
             customerId, value);
