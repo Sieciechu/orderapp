@@ -1,8 +1,16 @@
 package pl.wmocek.orders.application;
 
-import pl.wmocek.orders.application.command.*;
-import pl.wmocek.orders.application.command.handlers.*;
-import pl.wmocek.orders.application.command.handlers.factories.*;
+import pl.wmocek.orders.application.report.handlers.*;
+import pl.wmocek.orders.application.report.handlers.factories.*;
+import pl.wmocek.orders.application.report.request.AveragePriceOfAllOrdersForCustomerScreenReport;
+import pl.wmocek.orders.application.report.request.AveragePriceOfAllOrdersScreenReport;
+import pl.wmocek.orders.application.report.request.Command;
+import pl.wmocek.orders.application.report.request.CountAllOrdersForCustomerScreenReport;
+import pl.wmocek.orders.application.report.request.CountAllOrdersScreenReport;
+import pl.wmocek.orders.application.report.request.ListAllOrdersForCustomerScreenReport;
+import pl.wmocek.orders.application.report.request.ListAllOrdersScreenReport;
+import pl.wmocek.orders.application.report.request.TotalPriceOfAllOrdersForCustomerScreenReport;
+import pl.wmocek.orders.application.report.request.TotalPriceOfAllOrdersScreenReport;
 import pl.wmocek.orders.domain.OrdersRepository;
 import pl.wmocek.orders.io.OrderReader;
 

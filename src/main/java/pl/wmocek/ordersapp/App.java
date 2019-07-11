@@ -6,7 +6,7 @@ import pl.wmocek.orders.application.CliControllerFactory;
 import pl.wmocek.orders.application.CommandBus;
 import pl.wmocek.orders.application.CommandBusFactory;
 import pl.wmocek.orders.application.Controller;
-import pl.wmocek.orders.application.command.Command;
+import pl.wmocek.orders.application.report.request.Command;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.OrdersRepository;
 import pl.wmocek.orders.infrastructure.FileReaderResolver;

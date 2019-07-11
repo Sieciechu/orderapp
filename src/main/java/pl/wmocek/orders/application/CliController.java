@@ -1,6 +1,6 @@
 package pl.wmocek.orders.application;
 
-import pl.wmocek.orders.application.command.*;
+import pl.wmocek.orders.application.report.request.*;
 import pl.wmocek.orders.domain.DistinctCustomersRepository;
 
 import java.util.HashMap;
