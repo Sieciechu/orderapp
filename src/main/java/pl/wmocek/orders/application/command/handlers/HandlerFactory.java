@@ -1,4 +1,4 @@
-package pl.wmocek.orders.application.command;
+package pl.wmocek.orders.application.command.handlers;
 
 @FunctionalInterface
 public interface HandlerFactory {

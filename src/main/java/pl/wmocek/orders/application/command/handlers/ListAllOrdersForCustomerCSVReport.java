@@ -10,12 +10,12 @@ import pl.wmocek.orders.io.Writer;
 
 import java.io.IOException;
 
-class ListAllOrdersForCustomerScreenReport implements Handler {
+class ListAllOrdersForCustomerCSVReport implements Handler {
     private final Writer writer;
     private final OrdersRepository ordersRepository;
     private final OrderStringer stringer;
 
-    public ListAllOrdersForCustomerScreenReport(
+    public ListAllOrdersForCustomerCSVReport(
         @NonNull Writer writer,
         @NonNull OrdersRepository ordersRepository,
         @NonNull OrderStringer stringer

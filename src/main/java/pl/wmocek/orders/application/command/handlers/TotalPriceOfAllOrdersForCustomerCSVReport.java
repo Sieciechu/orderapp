@@ -2,16 +2,17 @@ package pl.wmocek.orders.application.command.handlers;
 
 import lombok.NonNull;
 import pl.wmocek.orders.application.command.Command;
+import pl.wmocek.orders.domain.CustomerId;
 import pl.wmocek.orders.domain.OrdersRepository;
 import pl.wmocek.orders.io.Writer;
 
 import java.io.IOException;
 
-class AveragePriceOfAllOrdersScreenReport implements Handler {
+class TotalPriceOfAllOrdersForCustomerCSVReport implements Handler {
     private final Writer writer;
     private final OrdersRepository repository;
 
-    AveragePriceOfAllOrdersScreenReport(
+    public TotalPriceOfAllOrdersForCustomerCSVReport(
         @NonNull Writer writer,
         @NonNull OrdersRepository repository
     ) {
@@ -22,9 +23,16 @@ class AveragePriceOfAllOrdersScreenReport implements Handler {
     @Override
     public void handle(Command command) {
 
+        String customerId = command.getData("customerId");
+
+        var value = repository.sumPriceOfOrdersForCustomer(new CustomerId(customerId));
+
+        String text = String.format("\nThe total price of all orders for customer '%s' : %.2f\n",
+            customerId, value);
+
+
         try {
-            var value = repository.getAveragePriceOfOrder();
-            writer.write(new String[]{String.format("\nThe average price of all orders: %.2f\n", value)});
+            writer.write(new String[]{text});
         } catch (IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
         }

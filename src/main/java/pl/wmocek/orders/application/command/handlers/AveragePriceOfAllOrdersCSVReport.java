@@ -7,11 +7,11 @@ import pl.wmocek.orders.io.Writer;
 
 import java.io.IOException;
 
-class AveragePriceOfAllOrdersScreenReport implements Handler {
+class AveragePriceOfAllOrdersCSVReport implements Handler {
     private final Writer writer;
     private final OrdersRepository repository;
 
-    AveragePriceOfAllOrdersScreenReport(
+    AveragePriceOfAllOrdersCSVReport(
         @NonNull Writer writer,
         @NonNull OrdersRepository repository
     ) {
@@ -24,7 +24,10 @@ class AveragePriceOfAllOrdersScreenReport implements Handler {
 
         try {
             var value = repository.getAveragePriceOfOrder();
-            writer.write(new String[]{String.format("\nThe average price of all orders: %.2f\n", value)});
+            writer.write(new String[]{
+                "The average price of all orders",
+                String.format("%.2f",value)
+            });
         } catch (IOException e) {
             System.err.println("Error occurred: " + e.getMessage());
         }

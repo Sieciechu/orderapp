@@ -2,7 +2,6 @@ package pl.wmocek.orders.application.command.handlers;
 
 import lombok.NonNull;
 import pl.wmocek.orders.application.command.Command;
-import pl.wmocek.orders.application.command.Handler;
 import pl.wmocek.orders.domain.CustomerId;
 import pl.wmocek.orders.domain.OrdersRepository;
 import pl.wmocek.orders.io.Writer;

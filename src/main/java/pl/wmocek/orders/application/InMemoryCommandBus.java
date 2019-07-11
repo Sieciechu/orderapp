@@ -2,6 +2,7 @@ package pl.wmocek.orders.application;
 
 import pl.wmocek.orders.application.command.*;
 import pl.wmocek.orders.application.command.handlers.*;
+import pl.wmocek.orders.application.command.handlers.factories.*;
 import pl.wmocek.orders.domain.OrdersRepository;
 import pl.wmocek.orders.io.OrderReader;
 
