@@ -14,8 +14,8 @@ import pl.wmocek.orders.infrastructure.Writer;
 import pl.wmocek.orders.infrastructure.reader.FileReaderResolver;
 import pl.wmocek.orders.infrastructure.reader.Reader;
 import pl.wmocek.orders.infrastructure.stringer.*;
-import pl.wmocek.writer.FileWriterFactory;
-import pl.wmocek.writer.ScreenWriterFactory;
+import pl.wmocek.io.FileWriterFactory;
+import pl.wmocek.io.ScreenWriterFactory;
 
 public class App {
 
@@ -69,7 +69,7 @@ public class App {
 
     private Writer resolveWriter(Request request) throws Exception {
 
-        pl.wmocek.writer.Writer w;
+        pl.wmocek.io.Writer w;
         ReportStringer reportStringer;
         pl.wmocek.orders.infrastructure.Writer reportWriter;
 

@@ -1,4 +1,4 @@
-package pl.wmocek.writer;
+package pl.wmocek.io;
 
 import java.io.IOException;
 

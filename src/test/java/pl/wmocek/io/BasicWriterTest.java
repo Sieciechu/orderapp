@@ -1,4 +1,4 @@
-package pl.wmocek.writer;
+package pl.wmocek.io;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

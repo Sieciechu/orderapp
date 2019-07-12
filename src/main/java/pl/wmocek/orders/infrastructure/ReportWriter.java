@@ -7,10 +7,10 @@ import java.io.IOException;
 
 public class ReportWriter implements Writer {
 
-    private pl.wmocek.writer.Writer writer;
+    private pl.wmocek.io.Writer writer;
     private ReportStringer reportStringer;
 
-    public ReportWriter(pl.wmocek.writer.Writer writer, ReportStringer reportStringer) {
+    public ReportWriter(pl.wmocek.io.Writer writer, ReportStringer reportStringer) {
         this.writer = writer;
         this.reportStringer = reportStringer;
     }
