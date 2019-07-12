@@ -9,7 +9,6 @@ import pl.wmocek.orders.domain.CustomerId;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.OrderAlreadyExistsException;
 import pl.wmocek.orders.domain.Product;
-import pl.wmocek.orders.io.OrderReader;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -372,11 +371,11 @@ class InMemoryOrdersRepositoryTest {
 
         // when-then
         numberOfReadOrders = repository.read(ordersBuffer);
-        Assertions.assertEquals(OrderReader.EOT, numberOfReadOrders);
+        Assertions.assertNull(numberOfReadOrders);
         Assertions.assertArrayEquals(new Order[9], ordersBuffer);
 
         numberOfReadOrders = repository.read(ordersBuffer);
-        Assertions.assertEquals(OrderReader.EOT, numberOfReadOrders);
+        Assertions.assertNull(numberOfReadOrders);
         Assertions.assertArrayEquals(new Order[9], ordersBuffer);
     }
 }

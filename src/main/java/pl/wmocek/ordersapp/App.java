@@ -2,17 +2,17 @@
 package pl.wmocek.ordersapp;
 
 import lombok.NonNull;
-import pl.wmocek.orders.application.CliControllerFactory;
-import pl.wmocek.orders.application.CommandBus;
-import pl.wmocek.orders.application.CommandBusFactory;
-import pl.wmocek.orders.application.Controller;
-import pl.wmocek.orders.application.report.request.Command;
+import pl.wmocek.orders.application.report.*;
+import pl.wmocek.orders.application.report.request.Request;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.OrdersRepository;
 import pl.wmocek.orders.infrastructure.FileReaderResolver;
 import pl.wmocek.orders.infrastructure.InMemoryOrdersRepository;
 import pl.wmocek.orders.infrastructure.Reader;
 import pl.wmocek.orders.infrastructure.ReaderException;
+import pl.wmocek.orders.io.FileWriterFactory;
+import pl.wmocek.orders.io.ScreenWriterFactory;
+import pl.wmocek.orders.io.Writer;
 
 public class App {
 
@@ -20,18 +20,18 @@ public class App {
     private OrdersRepository ordersRepository;
     private FileReaderResolver readerFactory;
     private Controller controller;
-    private CommandBus commandBus;
+    private RequestBus requestBus;
 
     private App(
         @NonNull OrdersRepository o,
         @NonNull FileReaderResolver r,
         @NonNull Controller c,
-        @NonNull CommandBus cb
+        @NonNull RequestBus cb
     ) {
         ordersRepository = o;
         readerFactory = r;
         controller = c;
-        commandBus = cb;
+        requestBus = cb;
     }
 
     public static void main(String[] args) throws Exception {
@@ -41,7 +41,7 @@ public class App {
             ordersRepository,
             new FileReaderResolver(),
             new CliControllerFactory(ordersRepository).create(),
-            new CommandBusFactory(ordersRepository, ordersRepository).create()
+            new CommandBusFactory(ordersRepository).create()
         );
         app.feedOrdersRepository(args);
         app.run();
@@ -49,13 +49,37 @@ public class App {
 
     private void run() throws Exception {
         while(true){
-            Command c = controller.getCommand();
-            if (null == c) {
+            Request request = controller.getRequest();
+            if (null == request) {
                 break;
             }
 
-            commandBus.send(c);
+            Writer w = resolveWriter(request);
+
+            Report report = requestBus.send(request);
+
+            w.write(report);
         }
+
+    }
+
+    private Writer resolveWriter(Request request) throws Exception {
+        Writer w;
+        String fileName = request.getData("fileName");
+        String type = request.getData("destination");
+
+        if ("screen".equals(type)) {
+            return new ScreenWriterFactory().create();
+        }
+
+        if ("file".equals(type)) {
+            if (null == fileName) {
+                throw new Exception("Filename is missing");
+            }
+            return new FileWriterFactory(fileName).create();
+        }
+
+        throw new Exception("Cannot create writer for given request");
 
     }
 

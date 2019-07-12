@@ -11,15 +11,11 @@ class BasicWriter implements Writer {
     }
 
     @Override
-    public int write(String[] buff) throws IOException {
-        int n=0;
-        for (String s : buff) {
-            out.write(s + "\n");
-            ++n;
-        }
+    public int write(String in) throws IOException {
 
+        out.write(in);
         out.flush();
 
-        return n;
+        return in.length();
     }
 }

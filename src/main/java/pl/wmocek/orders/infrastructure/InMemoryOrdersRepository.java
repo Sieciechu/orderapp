@@ -2,13 +2,12 @@ package pl.wmocek.orders.infrastructure;
 
 import lombok.NonNull;
 import pl.wmocek.orders.domain.*;
-import pl.wmocek.orders.io.OrderReader;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class InMemoryOrdersRepository implements OrdersRepository, OrderReader, DistinctCustomersRepository {
+public class InMemoryOrdersRepository implements OrdersRepository, DistinctCustomersRepository {
 
     private List<Order> orders = new ArrayList<>();
 
@@ -66,8 +65,8 @@ public class InMemoryOrdersRepository implements OrdersRepository, OrderReader, 
     }
 
     @Override
-    public List<Order> getAll() {
-        return orders.stream().collect(Collectors.toUnmodifiableList());
+    public List<Order> getAll(int offset, int limit) {
+        return orders.stream().skip(offset).limit(limit).collect(Collectors.toUnmodifiableList());
     }
 
     @Override
@@ -95,37 +94,5 @@ public class InMemoryOrdersRepository implements OrdersRepository, OrderReader, 
         return orders.stream()
             .map(Order::getCustomerId)
             .distinct().collect(Collectors.toList());
-    }
-
-    @Override
-    public int read(Order[] buff) throws IOException {
-        int n = 0;
-
-        for (int i = 0; i < buff.length; i++) {
-            buff[i] = null;
-        }
-
-        int repoSize = this.orders.size();
-
-        if(readPosition >= repoSize) {
-            return OrderReader.EOT;
-        }
-
-        for (int i = 0; i < buff.length; ++i) {
-            buff[i] = this.orders.get(readPosition);
-            ++readPosition;
-            ++n;
-
-            if(readPosition >= repoSize) {
-                return n;
-            }
-        }
-
-        return n;
-    }
-
-    @Override
-    public void rewind() {
-        readPosition = 0;
     }
 }

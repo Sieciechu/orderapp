@@ -1,6 +1,6 @@
 package pl.wmocek.orders.application.report.request;
 
-public abstract class Base implements Command {
+public abstract class Base implements Request {
 
     private final CommandData commandData;
 

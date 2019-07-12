@@ -15,7 +15,7 @@ public interface OrdersRepository {
 
     double sumPriceOfOrdersForCustomer(CustomerId customerId);
 
-    List<Order> getAll();
+    List<Order> getAll(int offset, int limit);
 
     List<Order> getOrdersForCustomer(CustomerId customerId);
 
