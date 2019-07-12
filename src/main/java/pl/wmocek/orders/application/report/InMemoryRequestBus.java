@@ -1,18 +1,30 @@
 package pl.wmocek.orders.application.report;
 
 import pl.wmocek.orders.application.report.handlers.Handler;
+import pl.wmocek.orders.application.report.handlers.HandlerFactory;
 import pl.wmocek.orders.application.report.request.*;
 import pl.wmocek.orders.domain.OrdersRepository;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
+/**
+ * InMemoryRequestBus class
+ */
 public class InMemoryRequestBus implements RequestBus {
 
-    private Map<String, Supplier<Handler>> resolver = new HashMap<>();
+    /**
+     * resolver maps Requests to Request Handlers.
+     * Map key is the Request class name, value is the HandlerFactory function interface for creating Request Handler
+     * @see InMemoryRequestBus#setResolverEntry(Class, HandlerFactory)
+     */
+    private Map<String, HandlerFactory> resolver = new HashMap<>();
 
-
+    /**
+     * InMemoryRequestBus constructor has already hardcoded resolver dependency - meaning
+     *  it has already defined mapping of Requests to Request Handlers
+     * @param ordersRepository OrderRepository needed by underlying handlers
+     */
     InMemoryRequestBus(OrdersRepository ordersRepository){
 
         setResolverEntry(ListAllOrders.class,
@@ -40,8 +52,14 @@ public class InMemoryRequestBus implements RequestBus {
             () -> new pl.wmocek.orders.application.report.handlers.ListAllOrdersForCustomer(ordersRepository));
     }
 
-    private void setResolverEntry(Class<? extends Request> key, Supplier<Handler> supplier) {
-        resolver.put(key.getCanonicalName(), supplier);
+    /**
+     * Support method for mapping the request class to request handler
+     * @param key
+     * @param factory
+     * Example: see the constructor
+     */
+    private void setResolverEntry(Class<? extends Request> key, HandlerFactory factory) {
+        resolver.put(key.getCanonicalName(), factory);
     }
 
 
@@ -51,7 +69,12 @@ public class InMemoryRequestBus implements RequestBus {
         return h.handle(c);
     }
 
-    private Handler getHandler(Request c) {
-        return resolver.get(c.getClass().getCanonicalName()).get();
+    /**
+     * Support method for creating the right handler
+     * @param request
+     * @return Handler
+     */
+    private Handler getHandler(Request request) {
+        return resolver.get(request.getClass().getCanonicalName()).create();
     }
 }

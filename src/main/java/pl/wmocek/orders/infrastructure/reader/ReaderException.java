@@ -1,4 +1,4 @@
-package pl.wmocek.orders.infrastructure;
+package pl.wmocek.orders.infrastructure.reader;
 
 public class ReaderException extends Exception {
     public ReaderException() {

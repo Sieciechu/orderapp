@@ -11,7 +11,8 @@ import java.io.IOException;
 class XmlFileReaderFactory implements FileReaderFactory {
 
     public Reader create(String fileFullPath)
-        throws FileNotFoundException, IOException, SAXException, ParserConfigurationException {
+        throws FileNotFoundException, IOException, SAXException, ParserConfigurationException
+    {
 
         return new XmlReader(new BufferedReader(new FileReader(fileFullPath)));
     }

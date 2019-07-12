@@ -6,6 +6,9 @@ import pl.wmocek.orders.domain.Product;
 
 import java.util.Iterator;
 
+/**
+ * CsvReader class for creating the Orders from a CSV file
+ */
 class CsvReader implements Reader {
 
     private final Iterator<String[]> iterator;

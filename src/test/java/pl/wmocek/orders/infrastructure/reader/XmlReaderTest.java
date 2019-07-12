@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.Product;
-import pl.wmocek.orders.infrastructure.ReaderException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;

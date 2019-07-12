@@ -5,6 +5,9 @@ import pl.wmocek.orders.application.report.ReportStringer;
 
 import java.io.IOException;
 
+/**
+ * ReportWriter class with the given ReportStringer makes report's string representation, then writes string with given Writer
+ */
 public class ReportWriter implements Writer {
 
     private pl.wmocek.io.Writer writer;

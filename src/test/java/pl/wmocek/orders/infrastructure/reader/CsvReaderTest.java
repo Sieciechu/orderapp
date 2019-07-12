@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.Product;
-import pl.wmocek.orders.infrastructure.ReaderException;
 
 import java.io.IOException;
 import java.util.Iterator;

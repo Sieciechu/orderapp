@@ -7,13 +7,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * CliController translates CLI input to Report Requests
+ */
 public class CliController implements Controller {
 
     private DistinctCustomersRepository repository;
     private Scanner scanner;
+
+    /**
+     * Maps menu options to request factory.
+     *  It works as a kind of simple router: from chosen user option to Report Request
+     */
     private Map< String, RequestFactory> router = new HashMap<>();
 
-
+    /**
+     * CliController constructor has already defined default router mapping
+     * @param repository
+     * @param scanner
+     */
     CliController(DistinctCustomersRepository repository, Scanner scanner) {
         this.repository = repository;
         this.scanner = scanner;
@@ -29,10 +41,19 @@ public class CliController implements Controller {
 
     }
 
+    /**
+     * Support method for defining routes
+     * @param key
+     * @param factory
+     */
     private void setRoute(String key, RequestFactory factory) {
         router.put(key, factory);
     }
 
+    /**
+     * Prints the menus, asks a user for options and then creates the right Request
+     * @return Request|null Null if factory cannot be created or user chose to quit.
+     */
     public Request getRequest(){
 
         printMenu();

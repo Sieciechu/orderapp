@@ -2,6 +2,9 @@ package pl.wmocek.io;
 
 import java.io.IOException;
 
+/**
+ * The most basic Writer implementing the Writer interface
+ */
 public class BasicWriter implements Writer {
 
     private java.io.Writer out;

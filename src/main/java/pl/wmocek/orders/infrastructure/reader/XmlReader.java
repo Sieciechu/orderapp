@@ -8,15 +8,16 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.Product;
-import pl.wmocek.orders.infrastructure.ReaderException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.function.Function;
 
+/**
+ * XmlReader class for creating Orders from a XML file
+ */
 class XmlReader implements Reader {
-
 
     private final NodeList requests;
     private int currentPosition;

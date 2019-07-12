@@ -1,5 +1,8 @@
 package pl.wmocek.orders.application.report;
 
+/**
+ * ValueReport class for report that contains just a title and one value
+ */
 public class ValueReport implements Report {
     private final String title;
     private final String value;

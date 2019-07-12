@@ -4,10 +4,16 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+/**
+ * Factory to create Writer to a file
+ */
 public class FileWriterFactory {
 
     private String fileName;
 
+    /**
+     * @param fileName Just a filename ended with *.csv, example: report1.csv
+     */
     public FileWriterFactory(String fileName) {
         this.fileName = fileName;
     }

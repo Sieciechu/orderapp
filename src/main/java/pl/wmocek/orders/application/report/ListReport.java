@@ -4,6 +4,9 @@ import pl.wmocek.orders.domain.Order;
 
 import java.util.List;
 
+/**
+ * ListReport class for report containing list of Orders and title
+ */
 public class ListReport implements Report {
     private final String title;
     private final List<Order> orders;
