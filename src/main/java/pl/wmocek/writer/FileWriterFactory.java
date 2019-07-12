@@ -1,4 +1,4 @@
-package pl.wmocek.orders.infrastructure.writer;
+package pl.wmocek.writer;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;

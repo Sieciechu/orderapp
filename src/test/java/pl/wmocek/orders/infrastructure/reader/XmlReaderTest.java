@@ -1,10 +1,11 @@
-package pl.wmocek.orders.infrastructure;
+package pl.wmocek.orders.infrastructure.reader;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.Product;
+import pl.wmocek.orders.infrastructure.ReaderException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;

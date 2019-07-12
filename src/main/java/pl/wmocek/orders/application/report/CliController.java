@@ -52,6 +52,10 @@ public class CliController implements Controller {
             default:
                 break;
         }
+        if ("f".equals(chosenOption) || "e".equals(chosenOption)) {
+            commandData.put("offset", "0");
+            commandData.put("limit", "50");
+        }
 
         String reportDestination = chooseDestination();
         commandData.put("destination", reportDestination);

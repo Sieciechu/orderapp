@@ -1,4 +1,4 @@
-package pl.wmocek.orders.infrastructure.writer;
+package pl.wmocek.writer;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;

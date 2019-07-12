@@ -1,4 +1,4 @@
-package pl.wmocek.orders.infrastructure;
+package pl.wmocek.orders.infrastructure.reader;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -8,6 +8,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.Product;
+import pl.wmocek.orders.infrastructure.ReaderException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;

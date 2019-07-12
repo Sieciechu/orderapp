@@ -1,4 +1,4 @@
-package pl.wmocek.orders.infrastructure;
+package pl.wmocek.orders.infrastructure.reader;
 
 import com.opencsv.CSVReader;
 import pl.wmocek.orders.domain.Order;

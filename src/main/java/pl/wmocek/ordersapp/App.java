@@ -3,18 +3,19 @@ package pl.wmocek.ordersapp;
 
 import lombok.NonNull;
 import pl.wmocek.orders.application.report.*;
+import pl.wmocek.orders.application.report.request.ListRequest;
 import pl.wmocek.orders.application.report.request.Request;
 import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.OrdersRepository;
-import pl.wmocek.orders.infrastructure.FileReaderResolver;
 import pl.wmocek.orders.infrastructure.InMemoryOrdersRepository;
-import pl.wmocek.orders.infrastructure.Reader;
 import pl.wmocek.orders.infrastructure.ReaderException;
-import pl.wmocek.orders.infrastructure.writer.FileWriterFactory;
-import pl.wmocek.orders.infrastructure.writer.ScreenWriterFactory;
-import pl.wmocek.orders.infrastructure.writer.Writer;
-
-
+import pl.wmocek.orders.infrastructure.ReportWriter;
+import pl.wmocek.orders.infrastructure.Writer;
+import pl.wmocek.orders.infrastructure.reader.FileReaderResolver;
+import pl.wmocek.orders.infrastructure.reader.Reader;
+import pl.wmocek.orders.infrastructure.stringer.*;
+import pl.wmocek.writer.FileWriterFactory;
+import pl.wmocek.writer.ScreenWriterFactory;
 
 public class App {
 
@@ -56,35 +57,51 @@ public class App {
             if (null == request) {
                 break;
             }
-
             
             Report report = requestBus.send(request);
-//            String out = reportMapper.map(report, request.getData("destination"));
-            Writer w = resolveWriter(request);
 
-         //   w.write(report);
+            Writer reportWriter = resolveWriter(request);
+
+            reportWriter.write(report);
         }
 
     }
 
     private Writer resolveWriter(Request request) throws Exception {
-        Writer w;
+
+        pl.wmocek.writer.Writer w;
+        ReportStringer reportStringer;
+        pl.wmocek.orders.infrastructure.Writer reportWriter;
+
+
         String fileName = request.getData("fileName");
         String type = request.getData("destination");
 
         if ("screen".equals(type)) {
-            return new ScreenWriterFactory().create();
-        }
+            w = new ScreenWriterFactory().create();
 
-        if ("file".equals(type)) {
+            if (request instanceof ListRequest) {
+                reportStringer = new ListReportScreenStringer(new OrderScreenFormatter());
+            } else {
+                reportStringer = new ValueReportScreenStringer();
+            }
+
+        } else if ("file".equals(type)) {
             if (null == fileName) {
                 throw new Exception("Filename is missing");
             }
-            return new FileWriterFactory(fileName).create();
+            w = new FileWriterFactory(fileName).create();
+
+            String separator = ",";
+            if (request instanceof ListRequest) {
+                reportStringer = new ListReportCSVStringer(separator, new OrderCSVFileFormatter(separator));
+            } else {
+                reportStringer = new ValueReportCSVStringer();
+            }
+        } else {
+            throw new Exception("Cannot create writer for given request");
         }
-
-        throw new Exception("Cannot create writer for given request");
-
+        return new ReportWriter(w, reportStringer);
     }
 
     private void feedOrdersRepository(@NonNull String[] fileNames) {

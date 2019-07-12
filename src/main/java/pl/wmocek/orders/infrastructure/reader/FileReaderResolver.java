@@ -1,4 +1,6 @@
-package pl.wmocek.orders.infrastructure;
+package pl.wmocek.orders.infrastructure.reader;
+
+import pl.wmocek.orders.infrastructure.ReaderException;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
