@@ -10,9 +10,9 @@ import pl.wmocek.orders.infrastructure.FileReaderResolver;
 import pl.wmocek.orders.infrastructure.InMemoryOrdersRepository;
 import pl.wmocek.orders.infrastructure.Reader;
 import pl.wmocek.orders.infrastructure.ReaderException;
-import pl.wmocek.orders.io.writer.FileWriterFactory;
-import pl.wmocek.orders.io.writer.ScreenWriterFactory;
-import pl.wmocek.orders.io.writer.Writer;
+import pl.wmocek.orders.infrastructure.writer.FileWriterFactory;
+import pl.wmocek.orders.infrastructure.writer.ScreenWriterFactory;
+import pl.wmocek.orders.infrastructure.writer.Writer;
 
 
 

@@ -1,4 +1,4 @@
-package pl.wmocek.orders.io.stringer;
+package pl.wmocek.orders.infrastructure.stringer;
 
 import lombok.NonNull;
 import pl.wmocek.orders.domain.Order;
