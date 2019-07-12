@@ -1,4 +1,4 @@
-package pl.wmocek.orders.io;
+package pl.wmocek.orders.io.writer;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,13 +14,15 @@ class BasicWriterTest {
         StringWriter stringWriter = new StringWriter();
         BasicWriter w = new BasicWriter(stringWriter);
 
-        String[] inputBuff = new String[]{"Hello,", "my name is", "John Smith"};
+        String inputBuff = "Hello,\n" +
+            "my name is\n" +
+            "John Smith";
 
         // when
         int n = w.write(inputBuff);
 
         // then
-        Assertions.assertEquals(3, n);
+        Assertions.assertEquals(inputBuff.length(), n);
         String expectedText = "Hello,\n" +
             "my name is\n" +
             "John Smith";

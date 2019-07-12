@@ -1,4 +1,4 @@
-package pl.wmocek.orders.io;
+package pl.wmocek.orders.io.writer;
 
 import java.io.IOException;
 

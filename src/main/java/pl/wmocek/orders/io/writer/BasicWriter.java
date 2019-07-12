@@ -1,8 +1,8 @@
-package pl.wmocek.orders.io;
+package pl.wmocek.orders.io.writer;
 
 import java.io.IOException;
 
-class BasicWriter implements Writer {
+public class BasicWriter implements Writer {
 
     private java.io.Writer out;
 

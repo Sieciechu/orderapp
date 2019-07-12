@@ -4,7 +4,6 @@ import lombok.NonNull;
 import pl.wmocek.orders.application.report.ListReport;
 import pl.wmocek.orders.application.report.Report;
 import pl.wmocek.orders.application.report.request.Request;
-import pl.wmocek.orders.domain.Order;
 import pl.wmocek.orders.domain.OrdersRepository;
 
 public class ListAllOrders extends OrderedBasedReport {
@@ -25,11 +24,9 @@ public class ListAllOrders extends OrderedBasedReport {
             throw new Exception("Cannot handle request, offset or limit is missing or have non int values");
         }
 
-        final Order[] orders = ordersRepository.getAll(offset, limit).toArray(new Order[limit]);
-
         return new ListReport(
             "List of all orders, starting from " + offset + " limit by " + limit,
-            orders
+            ordersRepository.getAll(offset, limit)
         );
 
     }

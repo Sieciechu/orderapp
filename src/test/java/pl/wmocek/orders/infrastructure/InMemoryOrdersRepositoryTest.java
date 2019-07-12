@@ -35,7 +35,7 @@ class InMemoryOrdersRepositoryTest {
 
 
         // then
-        List<Order> orders = repository.getAll();
+        List<Order> orders = repository.getAll(0, 10);
 
         Assertions.assertEquals(1, orders.size());
 
@@ -87,7 +87,7 @@ class InMemoryOrdersRepositoryTest {
 
 
         // then
-        List<Order> orders = repository.getAll();
+        List<Order> orders = repository.getAll(0, 10);
 
 
         Order expectedOrder = Order.create("1", 1, Arrays.asList(
@@ -116,7 +116,7 @@ class InMemoryOrdersRepositoryTest {
 
 
         // then
-        List<Order> orders = repository.getAll();
+        List<Order> orders = repository.getAll(0, 10);
         Assertions.assertEquals(1, orders.size());
 
         Order expectedOrder = Order.create("1", 1, Arrays.asList(
@@ -236,7 +236,7 @@ class InMemoryOrdersRepositoryTest {
         repository.store(Order.create("2", 3, new Product("ham", 3, 10.0)));
         repository.store(Order.create("3", 4, new Product("ham", 1, 10.0)));
 
-        List<Order> orders = repository.getAll();
+        List<Order> orders = repository.getAll(0, 10);
         Assertions.assertEquals(5, orders.size());
     }
 
@@ -335,24 +335,16 @@ class InMemoryOrdersRepositoryTest {
         repository.add(Order.create("2", 5, new Product("bread", 2, 2.5)));
         repository.add(Order.create("3", 6, new Product("butter", 1, 3.0)));
 
-        Order[] ordersBuffer = new Order[10];
-
-        // when
-        int numberOfReadOrders = repository.read(ordersBuffer);
+        Order[] ordersBuffer = repository.getAll(0, 10).toArray(new Order[0]);
 
         // then
-        Assertions.assertEquals(4, numberOfReadOrders);
+        Assertions.assertEquals(4, ordersBuffer.length);
 
         Order expectedOrder = Order.create("1", 1, Arrays.asList(
             new Product("bread", 1, 2.5),
             new Product("chocolate", 2, 1.5)
         ));
         Assertions.assertEquals(expectedOrder, ordersBuffer[0]);
-
-
-        for (int i = numberOfReadOrders; i < ordersBuffer.length; i++) {
-            Assertions.assertNull(ordersBuffer[i]);
-        }
     }
 
     @Test
@@ -365,17 +357,10 @@ class InMemoryOrdersRepositoryTest {
         repository.add(Order.create("2", 5, new Product("bread", 2, 2.5)));
         repository.add(Order.create("3", 6, new Product("butter", 1, 3.0)));
 
-        Order[] ordersBuffer = new Order[9];
-        int numberOfReadOrders = 0;
-        numberOfReadOrders = repository.read(ordersBuffer);
 
         // when-then
-        numberOfReadOrders = repository.read(ordersBuffer);
-        Assertions.assertNull(numberOfReadOrders);
-        Assertions.assertArrayEquals(new Order[9], ordersBuffer);
+        List<Order> orders = repository.getAll(6, 10);
 
-        numberOfReadOrders = repository.read(ordersBuffer);
-        Assertions.assertNull(numberOfReadOrders);
-        Assertions.assertArrayEquals(new Order[9], ordersBuffer);
+        Assertions.assertEquals(0, orders.size());
     }
 }

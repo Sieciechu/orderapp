@@ -10,9 +10,11 @@ import pl.wmocek.orders.infrastructure.FileReaderResolver;
 import pl.wmocek.orders.infrastructure.InMemoryOrdersRepository;
 import pl.wmocek.orders.infrastructure.Reader;
 import pl.wmocek.orders.infrastructure.ReaderException;
-import pl.wmocek.orders.io.FileWriterFactory;
-import pl.wmocek.orders.io.ScreenWriterFactory;
-import pl.wmocek.orders.io.Writer;
+import pl.wmocek.orders.io.writer.FileWriterFactory;
+import pl.wmocek.orders.io.writer.ScreenWriterFactory;
+import pl.wmocek.orders.io.writer.Writer;
+
+
 
 public class App {
 
@@ -21,6 +23,7 @@ public class App {
     private FileReaderResolver readerFactory;
     private Controller controller;
     private RequestBus requestBus;
+
 
     private App(
         @NonNull OrdersRepository o,
@@ -47,18 +50,19 @@ public class App {
         app.run();
     }
 
-    private void run() throws Exception {
+    public void run() throws Exception {
         while(true){
             Request request = controller.getRequest();
             if (null == request) {
                 break;
             }
 
+            
+            Report report = requestBus.send(request);
+//            String out = reportMapper.map(report, request.getData("destination"));
             Writer w = resolveWriter(request);
 
-            Report report = requestBus.send(request);
-
-            w.write(report);
+         //   w.write(report);
         }
 
     }

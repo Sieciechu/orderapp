@@ -1,15 +1,7 @@
 package pl.wmocek.orders.application.report;
 
-import pl.wmocek.orders.application.report.handlers.*;
+import pl.wmocek.orders.application.report.handlers.Handler;
 import pl.wmocek.orders.application.report.request.*;
-import pl.wmocek.orders.application.report.request.AveragePriceOfAllOrders;
-import pl.wmocek.orders.application.report.request.AveragePriceOfAllOrdersForCustomer;
-import pl.wmocek.orders.application.report.request.CountAllOrders;
-import pl.wmocek.orders.application.report.request.CountAllOrdersForCustomer;
-import pl.wmocek.orders.application.report.request.ListAllOrders;
-import pl.wmocek.orders.application.report.request.ListAllOrdersForCustomer;
-import pl.wmocek.orders.application.report.request.TotalPriceOfAllOrders;
-import pl.wmocek.orders.application.report.request.TotalPriceOfAllOrdersForCustomer;
 import pl.wmocek.orders.domain.OrdersRepository;
 
 import java.util.HashMap;

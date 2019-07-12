@@ -3,8 +3,9 @@ package pl.wmocek.orders.infrastructure;
 import lombok.NonNull;
 import pl.wmocek.orders.domain.*;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class InMemoryOrdersRepository implements OrdersRepository, DistinctCustomersRepository {
