@@ -21,7 +21,6 @@ import java.nio.file.Path;
 
 public class App {
 
-    private final String FILES_DIR_PATH = "/home/wojciech/Projects/orderapp2/src/main/resources/";
     private OrdersRepository ordersRepository;
     private FileReaderResolver readerFactory;
     private Controller controller;
@@ -53,6 +52,10 @@ public class App {
         app.run();
     }
 
+    /**
+     * The main loop of the order application
+     * @throws Exception
+     */
     public void run() throws Exception {
         while(true){
             Request request = controller.getRequest();
@@ -70,7 +73,12 @@ public class App {
 
     }
 
-    private void log(Request request) {
+    /**
+     * Helper method for logging the report filename to the screen
+     * ( In real world there should be some logger injected as dependency, this solution is for simplicity )
+     * @param request Request to be logged
+     */
+    private void log(@NonNull Request request) {
         String fileName = request.getData("fileName");
         if (null == fileName) {
             return;
@@ -78,7 +86,14 @@ public class App {
         System.out.println("Report successfully written to : " + Path.of(fileName).toAbsolutePath().toString());
     }
 
-    private Writer resolveWriter(Request request) throws Exception {
+    /**
+     * Support method for getting the right Writer for given Request.
+     * ( As this has different responsibility there should be separate class for it, but it's here for simplicity )
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    private Writer resolveWriter(@NonNull Request request) throws Exception {
 
         pl.wmocek.io.Writer w;
         ReportStringer reportStringer;
@@ -114,6 +129,11 @@ public class App {
         return new ReportWriter(w, reportStringer);
     }
 
+    /**
+     * Support method for feeding the orders repository
+     * ( As this has different responsibility there should be separate class for it, but it's here for simplicity )
+     * @param fileNames
+     */
     private void feedOrdersRepository(@NonNull String[] fileNames) {
         for (String fileName : fileNames) {
             Reader reader = null;
