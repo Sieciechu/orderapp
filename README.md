@@ -73,4 +73,4 @@ Application for handling orders. Requirements:
 
 6. Each report can be shown on the screen or written to csv file
 7. Database is not shared between launches
-8. Incorrect lines during file import are ignored, but info about error is shown to the user (screen or log file)
+8. Incorrect lines during file import are ignored
