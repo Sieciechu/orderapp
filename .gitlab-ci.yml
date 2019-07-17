@@ -4,20 +4,23 @@ stages:
   - build
   - test
 
+variables:
+  GRADLE_USER_HOME: "~/.gradle"
+
 before_script:
-  #  - echo `pwd` # debug
-  #  - echo "$CI_BUILD_NAME, $CI_BUILD_REF_NAME $CI_BUILD_STAGE" # debug
-  - export GRADLE_USER_HOME=`pwd`/.gradle
+  - echo `pwd` # debug
+  - echo "$CI_BUILD_NAME, $CI_BUILD_REF_NAME $CI_BUILD_STAGE" # debug
+  - ls -la $GRADLE_USER_HOME
 
 cache:
   paths:
-    - .gradle/wrapper
-    - .gradle/caches
+    - ~/.gradle/wrapper
+    - ~/.gradle/caches
 
 build:
   stage: build
   script:
-    - ./gradlew assemble
+    - gradle assemble
   artifacts:
     paths:
       - build/libs/*.jar
@@ -28,4 +31,4 @@ build:
 test:
   stage: test
   script:
-    - ./gradlew check
+    - gradle check
