@@ -17,6 +17,8 @@ import pl.wmocek.orders.infrastructure.reader.Reader;
 import pl.wmocek.orders.infrastructure.reader.ReaderException;
 import pl.wmocek.orders.infrastructure.stringer.*;
 
+import java.nio.file.Path;
+
 public class App {
 
     private final String FILES_DIR_PATH = "/home/wojciech/Projects/orderapp2/src/main/resources/";
@@ -63,15 +65,23 @@ public class App {
             Writer reportWriter = resolveWriter(request);
 
             reportWriter.write(report);
+            log(request);
         }
 
+    }
+
+    private void log(Request request) {
+        String fileName = request.getData("fileName");
+        if (null == fileName) {
+            return;
+        }
+        System.out.println("Report successfully written to : " + Path.of(fileName).toAbsolutePath().toString());
     }
 
     private Writer resolveWriter(Request request) throws Exception {
 
         pl.wmocek.io.Writer w;
         ReportStringer reportStringer;
-        pl.wmocek.orders.infrastructure.Writer reportWriter;
 
 
         String fileName = request.getData("fileName");

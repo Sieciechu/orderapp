@@ -3,6 +3,7 @@ package pl.wmocek.orders.application.report;
 import pl.wmocek.orders.application.report.request.*;
 import pl.wmocek.orders.domain.DistinctCustomersRepository;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -11,6 +12,8 @@ import java.util.Scanner;
  * CliController translates CLI input to Report Requests
  */
 public class CliController implements Controller {
+
+    private final String DEFAULT_REPORTS_DIR_PATH = "src/main/resources/";
 
     private DistinctCustomersRepository repository;
     private Scanner scanner;
@@ -80,10 +83,11 @@ public class CliController implements Controller {
 
         String reportDestination = chooseDestination();
         commandData.put("destination", reportDestination);
-        if ("csv".equals(reportDestination)) {
-            commandData.put("fileName", "Test123");
-        }
+        if ("file".equals(reportDestination)) {
 
+            String reportFileName = "report" + LocalDateTime.now();
+            commandData.put("fileName", DEFAULT_REPORTS_DIR_PATH + reportFileName);
+        }
 
         RequestFactory requestFactory = router.get(chosenOption);
         if (null == requestFactory) {
@@ -98,7 +102,7 @@ public class CliController implements Controller {
         String defaultDestination = "screen";
         String destination = scanner.nextLine();
         if ("c".equals(destination)) {
-            return "csv";
+            return "file";
         }
         return defaultDestination;
     }
