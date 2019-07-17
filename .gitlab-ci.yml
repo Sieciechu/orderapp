@@ -1,0 +1,9 @@
+image: "gradle:jdk11"
+
+build:
+  script:
+    - gradle build -x test
+
+test:
+  script:
+    - gradle test
