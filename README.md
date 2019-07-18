@@ -23,30 +23,46 @@ Table of Contents:
 
 <a name="build"></a>
 ### Build
-Using gradle:
-`$ ./gradlew build`
+- Using docker:
+`./dockerbuild.sh`
 
-Using docker:
-`$ docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project -u "gradle:gradle" gradle:jdk11 gradle build`
+- Using gradle:
 
+  `$ ./gradlew build`
+
+  or:
+
+  `$ docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project -u "gradle:gradle" gradle:jdk11 gradle build`
+
+---
 ### Test:
 Using gradle:
+
 `$ ./gradlew test`
 
-Using docker:
+or:
 `$ docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project -u "gradle:gradle" gradle:jdk11 gradle test`
-
+---
 <a name="run"></a>
 #### Run:
-Locally:
-`$ java -jar build/libs/orderapp-all.jar "$PWD/src/main/resources/orders.csv" "$PWD/src/main/resources/orders.xml"`
+- Using docker:
 
-Using docker:
+  `$ docker container run --rm -it sieciech/orderapp:0.1`
 
-`$ docker image build -t order-app .`
+  or:
+  `docker container run --rm -it -v /tmp/reports:/app/reports sieciech/orderapp:0.1`
 
-`$ docker container run --rm -it order-app`
+- Locally:
 
+  `$ java -jar build/libs/orderapp-all.jar "$PWD/src/main/resources/orders.csv" "$PWD/src/main/resources/orders.xml"`
+
+  or:
+
+  `$ docker image build -t order-app .`
+
+  `$ docker container run --rm -it order-app`
+
+---
 <a name="description"></a>
 ### More details
 Application for handling orders. Requirements:
