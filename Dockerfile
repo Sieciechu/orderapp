@@ -8,7 +8,7 @@ USER root
 COPY . /home/gradle/project
 WORKDIR /home/gradle/project
 
-RUN gradle build && gradle shadowJar
+RUN gradle build
 
 # -----------------------------
 FROM openjdk:11-jre as app
@@ -19,6 +19,7 @@ ARG BUILD_DATE
 WORKDIR /app
 COPY --from=builder  /home/gradle/project/build/libs/orderapp-all.jar /app/orderapp.jar
 COPY --from=builder  /home/gradle/project/src/main/resources/* /app/input/
+RUN mkdir ./reports
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
       org.label-schema.vcs-ref=${VCS_REF} \

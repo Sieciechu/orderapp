@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class CliController implements Controller {
 
-    private final String DEFAULT_REPORTS_DIR_PATH = "src/main/resources/";
+    private final String DEFAULT_REPORTS_DIR_PATH = "reports/";
 
     private DistinctCustomersRepository repository;
     private Scanner scanner;
