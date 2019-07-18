@@ -1,3 +1,8 @@
+Github
+
+[![HitCount](http://hits.dwyl.io/Sieciechu/orderapp.svg)](http://hits.dwyl.io/Sieciechu/orderapp)
+
+
 Dockerhub 
 
 https://hub.docker.com/r/sieciech/orderapp
