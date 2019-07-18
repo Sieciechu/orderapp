@@ -1,6 +1,11 @@
-Docker image 
-[![](https://images.microbadger.com/badges/version/sieciech/orderapp.svg)](https://microbadger.com/images/sieciech/orderapp "Get your own version badge on microbadger.com")
+Dockerhub 
 
+https://hub.docker.com/r/sieciech/orderapp
+
+[![](https://images.microbadger.com/badges/image/sieciech/orderapp.svg)](https://microbadger.com/images/sieciech/orderapp "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/sieciech/orderapp.svg)](https://microbadger.com/images/sieciech/orderapp "Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/commit/sieciech/orderapp.svg)](https://microbadger.com/images/sieciech/orderapp "Get your own commit badge on microbadger.com")
+---
 ## Introduction
 This is application for handling orders. Feeds in memory database from xml and csv files.
 Allows to print reports to the screen and to a CSV file. I treat this app as an excercise for learning java.
