@@ -1,3 +1,6 @@
+Docker image 
+[![](https://images.microbadger.com/badges/version/sieciech/orderapp.svg)](https://microbadger.com/images/sieciech/orderapp "Get your own version badge on microbadger.com")
+
 ## Introduction
 This is application for handling orders. Feeds in memory database from xml and csv files.
 Allows to print reports to the screen and to a CSV file. I treat this app as an excercise for learning java.
