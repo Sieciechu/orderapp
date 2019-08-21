@@ -14,8 +14,8 @@ public class Order {
         @NonNull RequestId requestId,
         @NonNull List<Product> productList
     ) {
-        this.customerId =(customerId);
-        this.requestId =(requestId);
+        this.customerId = customerId;
+        this.requestId = requestId;
 
         if (0 == productList.size()) {
             throw new IllegalArgumentException("Cannot create order without products");
